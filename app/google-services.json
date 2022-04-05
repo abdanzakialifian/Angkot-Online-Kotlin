@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "909422598945",
+    "firebase_url": "https://kotline-app-default-rtdb.firebaseio.com",
+    "project_id": "kotline-app",
+    "storage_bucket": "kotline-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:909422598945:android:40edc4bc7fddaa4f173c60",
+        "android_client_info": {
+          "package_name": "com.transportation.kotline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "909422598945-hvttrlljvoft801iebven874ct00ur0b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.transportation.kotline",
+            "certificate_hash": "079366083a34539b1764a288be0fbf34b50654b8"
+          }
+        },
+        {
+          "client_id": "909422598945-uj27pob4v8aigcf2850hifpl7om28k2c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.transportation.kotline",
+            "certificate_hash": "c171936cac74c1fd092b9e7e4f748e2cb38874f8"
+          }
+        },
+        {
+          "client_id": "909422598945-uoq0qscpahjdfeut6v5fsq1cth6rmimh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHM3nPUQ2eEolb34IN5E7GvBjVAqb4W-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "909422598945-ujtgnuk4liksgl64c0smdk8p4u41k4r0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

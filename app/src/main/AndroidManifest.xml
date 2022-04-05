@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.transportation.kotline">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Kotline">
+
+        <service
+            android:name=".other.ApplicationTurnedOff"
+            android:stopWithTask="false" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBZRi24fGE6-MEBRGEIkO17-Za6CziKA_Q" />
+
+        <activity
+            android:name=".driver.DetailDriverHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.DetailCustomerHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".driver.DriversHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.CustomersHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".driver.DriverProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.CustomerProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".driver.DriverActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.CustomerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".other.LoginEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".other.RegisterEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.CustomerLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".driver.DriverLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".other.OptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".onboarding.OnBoardingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".other.SplashScreenActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

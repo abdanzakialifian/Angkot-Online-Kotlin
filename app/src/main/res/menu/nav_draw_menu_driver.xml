@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_person_32"
+        android:title="@string/profile" />
+
+    <item
+        android:id="@+id/working"
+        app:actionLayout="@layout/custom_layout_switch"
+        android:icon="@drawable/ic_switch"
+        android:title="@string/working"/>
+
+    <item
+        android:id="@+id/history"
+        android:icon="@drawable/ic_history_32"
+        android:title="@string/customersHistory" />
+
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/ic_logout_32"
+        android:title="@string/logout" />
+
+</menu>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Kotline/app/src/main/res/drawable/custom_background_radio_button.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/custom_border.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/custom_button.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/custom_button_blue.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/custom_button_disabled.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/custom_button_white.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/custom_progress_bar.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/custom_rectangle.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/custom_rectangle_one.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/custom_rectangle_three.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/custom_rectangle_two.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/custom_text_input_layout.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/ic_error_load_data.xml" value="0.2035" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/ic_load_data.xml" value="0.2035" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/ic_logout_32.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/drawable/ic_menu_32.xml" value="0.1597222222222222" />
+        <entry key="..\:/Kotline/app/src/main/res/font/font.xml" value="0.1696367374914325" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/action_bar_layout.xml" value="0.176" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/action_bar_layout_profile.xml" value="0.176" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_customer.xml" value="0.176" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_customer_login.xml" value="0.2" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_customer_profile.xml" value="0.176" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_customers_history.xml" value="0.2" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_detail_customer_history.xml" value="0.21927083333333333" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_detail_driver_history.xml" value="0.21927083333333333" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_detail_history.xml" value="0.264" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_driver.xml" value="0.16799999999999998" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_driver_login.xml" value="0.176" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_driver_profile.xml" value="0.264" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_drivers_history.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_history.xml" value="0.176" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_login_email.xml" value="0.176" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_main.xml" value="0.152" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_onboarding.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_option.xml" value="0.152" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_register_email.xml" value="0.152" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/activity_splash_screen.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/custom_alert_dialog_layout.xml" value="0.4" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/custom_background_layout.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/custom_background_layout_customer.xml" value="0.2" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/custom_background_layout_detail_customer_history.xml" value="0.21927083333333333" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/custom_background_layout_detail_driver_history.xml" value="0.264" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/custom_background_layout_detail_history.xml" value="0.264" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/custom_background_layout_driver.xml" value="0.176" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/custom_gender_layout.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/custom_layout_switch.xml" value="0.21927083333333333" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/dishub_layout.xml" value="0.152" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/fragment_customer_profile.xml" value="0.176" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/fragment_history.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/fragment_information.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/fragment_onboarding_one.xml" value="0.16" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/fragment_onboarding_three.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/fragment_onboarding_two.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/fragment_order.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/item_history_list.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/item_list_customers_history.xml" value="0.264" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/item_list_drivers_history.xml" value="0.264" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/layout_history_list.xml" value="0.264" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/nav_header.xml" value="0.264" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/nav_header_customer.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/next_layout.xml" value="0.2" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/sign_in_layout.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/layout/sign_up_layout.xml" value="0.2" />
+        <entry key="..\:/Kotline/app/src/main/res/menu/nav_draw_menu_customer.xml" value="0.14618055555555556" />
+        <entry key="..\:/Kotline/app/src/main/res/menu/nav_draw_menu_driver.xml" value="0.264" />
+        <entry key="..\:/Kotline/app/src/main/res/menu/nav_header_menu.xml" value="0.14618055555555556" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
