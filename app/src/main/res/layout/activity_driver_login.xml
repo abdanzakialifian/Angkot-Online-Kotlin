@@ -12,7 +12,7 @@
         android:layout_height="280dp"
         android:layout_marginTop="35dp"
         android:contentDescription="@string/image_driver"
-        android:src="@drawable/icon_driver"
+        android:src="@drawable/driver"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
