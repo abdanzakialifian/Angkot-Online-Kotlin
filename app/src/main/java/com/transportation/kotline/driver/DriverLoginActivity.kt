@@ -21,6 +21,7 @@ import com.transportation.kotline.R
 import com.transportation.kotline.databinding.ActivityDriverLoginBinding
 import com.transportation.kotline.other.LoginEmailActivity
 import com.transportation.kotline.other.RegisterEmailActivity
+import com.transportation.kotline.other.SendEmail
 
 @Suppress("DEPRECATION")
 class DriverLoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -90,6 +91,10 @@ class DriverLoginActivity : AppCompatActivity(), View.OnClickListener {
                         // add data driver to child id drivers
                         driversDb.setValue(driverData)
 
+                        // send email to driver
+                        val sendEmail = SendEmail(application, email)
+                        sendEmail.email()
+
                         // call function alert dialog
                         alertDialog()
                     }
@@ -156,6 +161,7 @@ class DriverLoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     // this is where we provide the task and data for the Google Account
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         // view loading bar

@@ -185,6 +185,11 @@ class RegisterEmailActivity : AppCompatActivity(), View.OnClickListener {
                                     .child(driver.toString()).child(userId)
                                 // add data driver to child id drivers
                                 driversDb.setValue(driverData)
+
+                                // send email to driver
+                                val sendEmail = SendEmail(application, email)
+                                sendEmail.email()
+
                                 // call function alert dialog
                                 alertDialog(driver)
                             }

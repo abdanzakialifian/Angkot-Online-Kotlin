@@ -136,10 +136,10 @@ class DetailDriverHistoryActivity : AppCompatActivity(), OnMapReadyCallback, Rou
         }
     }
 
-    // function to get route marker
+    // function to get route marker API KEY
     private fun getRouteToMarker(locationLatLng: LatLng, destinationLatLng: LatLng) {
         val routing = Routing.Builder()
-            .key("API_KEY")
+            .key("AIzaSyDTJ2xuEs3k5e5yADs93VwiqcapyO5AT6M")
             .travelMode(AbstractRouting.TravelMode.DRIVING)
             .withListener(this)
             .alternativeRoutes(false)
@@ -185,7 +185,7 @@ class DetailDriverHistoryActivity : AppCompatActivity(), OnMapReadyCallback, Rou
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_car))
             )
             mMap.addMarker(
-                MarkerOptions().position(LatLng(locationLat, locationLng))
+                MarkerOptions().position(LatLng(destinationLat, destinationLng))
                     .title("Destination location")
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_destination_pin))
             )

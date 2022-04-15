@@ -591,11 +591,11 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
         }
     }
 
-    // function to get route marker
+    // function to get route marker API KEY
     private fun getRouteToMarker(pickUpLatLng: LatLng?) {
         if (pickUpLatLng != null && mLastLocation != null) {
             val routing = Routing.Builder()
-                .key("API_KEY")
+                .key("AIzaSyDTJ2xuEs3k5e5yADs93VwiqcapyO5AT6M")
                 .travelMode(AbstractRouting.TravelMode.DRIVING)
                 .withListener(this)
                 .alternativeRoutes(false)

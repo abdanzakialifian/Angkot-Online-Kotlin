@@ -20,7 +20,7 @@
         android:layout_marginTop="44dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/create_new_account"
-        android:textSize="28sp"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/custom_action_bar" />

@@ -66,7 +66,7 @@ class DriverProfileActivity : AppCompatActivity(), View.OnClickListener {
 
         // add event click to button
         binding.apply {
-            customActionBar.btnBack.setOnClickListener(this@DriverProfileActivity)
+            btnBack.setOnClickListener(this@DriverProfileActivity)
             edtBirthdate.setOnClickListener(this@DriverProfileActivity)
             btnSave.setOnClickListener(this@DriverProfileActivity)
             imgProfile.setOnClickListener(this@DriverProfileActivity)

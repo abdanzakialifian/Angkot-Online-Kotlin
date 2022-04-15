@@ -10,19 +10,20 @@ import android.os.Looper
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
-import com.firebase.geofire.*
+import com.firebase.geofire.GeoFire
+import com.firebase.geofire.GeoLocation
+import com.firebase.geofire.GeoQuery
+import com.firebase.geofire.GeoQueryEventListener
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
-import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -111,7 +112,11 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                         startActivity(this)
                     }
                 }
-                R.id.route -> {}
+                R.id.route -> {
+                    Intent(this, RouteInformationContainerActivity::class.java).apply {
+                        startActivity(this)
+                    }
+                }
                 // show alert dialog logout
                 R.id.logout -> alertLogout()
             }
@@ -155,8 +160,8 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         // initialize fused location provider
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-        // initialize places
-        Places.initialize(applicationContext, "API_KEY")
+        // initialize places API KEY
+        Places.initialize(applicationContext, "AIzaSyDTJ2xuEs3k5e5yADs93VwiqcapyO5AT6M")
         Places.createClient(this)
 
         // Initialize the AutocompleteSupportFragment.
@@ -180,6 +185,12 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                 destination = place.name
                 address = place.address
                 destinationLatLng = place.latLng
+
+                // create bottom sheet
+                BottomSheetBehavior.from(binding.customBackgroundLayoutCustomer.bottomSheet).apply {
+                    peekHeight = 100
+                    this.state = BottomSheetBehavior.STATE_EXPANDED
+                }
             }
 
             override fun onError(status: Status) {}
@@ -194,8 +205,6 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         binding.customBackgroundLayoutCustomer.apply {
             // add event click to button request
             btnRequestAngkot.setOnClickListener(this@CustomerActivity)
-            // check default radio button
-            rgTrayek.check(R.id.rb_a)
         }
 
         // call function get customer profile in navigation drawer
@@ -203,6 +212,598 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
 
         // call class is application turned off
         startService(Intent(this, ApplicationTurnedOff::class.java))
+
+        val dstnLatLng = LatLng(-7.381635590413542, 109.74607270244847)
+
+        getTrayekAngkotA(dstnLatLng)
+    }
+
+    private fun getTrayekAngkotA(destination: LatLng?) {
+        val trayekA = "A"
+
+        val destinationCustomer = Location("")
+        destinationCustomer.latitude = destination?.latitude ?: 0.0
+        destinationCustomer.longitude = destination?.longitude ?: 0.0
+
+        val jlVeteran = Location("")
+        jlVeteran.latitude = -7.394799033719521
+        jlVeteran.longitude = 109.700762915669
+
+        val jlBrengkok = Location("")
+        jlBrengkok.latitude = -7.396415762365111
+        jlBrengkok.longitude = 109.70093516506572
+
+        val jlCampurSalam = Location("")
+        jlCampurSalam.latitude = -7.3966743624237745
+        jlCampurSalam.longitude = 109.69889089680727
+
+        val jlLetjendSuprapto = Location("")
+        jlLetjendSuprapto.latitude = -7.398083949789377
+        jlLetjendSuprapto.longitude = 109.69292715129609
+
+        val jlMantrianom = Location("")
+        jlMantrianom.latitude = -7.398732293120247
+        jlMantrianom.longitude = 109.6283702594063
+
+        val jlJendSoedirman = Location("")
+        jlJendSoedirman.latitude = -7.405499073713895
+        jlJendSoedirman.longitude = 109.60576501924116
+
+        val jlMtHaryono = Location("")
+        jlMtHaryono.latitude = -7.3955108893575945
+        jlMtHaryono.longitude = 109.69891450257482
+
+        val jlMayjendSoetojo = Location("")
+        jlMayjendSoetojo.latitude = -7.392973866382533
+        jlMayjendSoetojo.longitude = 109.69908275635157
+
+        val jlLetnanKarjono = Location("")
+        jlLetnanKarjono.latitude = -7.393295474003801
+        jlLetnanKarjono.longitude = 109.7006343897887
+
+        val jlStadion = Location("")
+        jlStadion.latitude = -7.39199315369452
+        jlStadion.longitude = 109.70438694635027
+
+        val terminalBus = Location("")
+        terminalBus.latitude = -7.392655920315736
+        terminalBus.longitude = 109.70482103417467
+
+//        val distanceOne = jlVeteran.distanceTo(jlCampurSalam) / 1000
+//        val distanceTwo = jlVeteran.distanceTo(jlBrengkok) / 1000
+//        val distanceThree = jlBrengkok.distanceTo(jlCampurSalam) / 1000
+//        val distanceFour = jlCampurSalam.distanceTo(jlLetjendSuprapto) / 1000
+//        val distanceFive = jlLetjendSuprapto.distanceTo(jlMantrianom) / 1000
+//        val distanceSix = jlMantrianom.distanceTo(jlJendSoedirman) / 1000
+//        val distanceSeven = jlCampurSalam.distanceTo(jlMtHaryono) / 1000
+//        val distanceEight = jlMtHaryono.distanceTo(jlMayjendSoetojo) / 1000
+//        val distanceNine = jlMayjendSoetojo.distanceTo(jlLetnanKarjono) / 1000
+//        val distanceTen = jlLetnanKarjono.distanceTo(jlStadion) / 1000
+//        val distanceEleven = jlStadion.distanceTo(terminalBus) / 1000
+
+//        Log.d("CEK", distanceOne.toString())
+//        Log.d("CEK", distanceTwo.toString())
+//        Log.d("CEK", distanceThree.toString())
+//        Log.d("CEK", distanceFour.toString())
+//        Log.d("CEK", distanceFive.toString())
+//        Log.d("CEK", distanceSix.toString())
+//        Log.d("CEK", distanceSeven.toString())
+//        Log.d("CEK", distanceEight.toString())
+//        Log.d("CEK", distanceNine.toString())
+//        Log.d("CEK", distanceTen.toString())
+//        Log.d("CEK", distanceEleven.toString())
+
+        val distanceToJlVeteran = destinationCustomer.distanceTo(jlVeteran) / 1000
+        val distanceToJlBrengkok = destinationCustomer.distanceTo(jlBrengkok) / 1000
+        val distanceToJlCampurSalam = destinationCustomer.distanceTo(jlCampurSalam) / 1000
+        val distanceToJlLetjendSuprapto = destinationCustomer.distanceTo(jlLetjendSuprapto) / 1000
+        val distanceToJlMantrianom = destinationCustomer.distanceTo(jlMantrianom) / 1000
+        val distanceToJlJendSoedirman = destinationCustomer.distanceTo(jlJendSoedirman) / 1000
+        val distanceToJlMtHaryono = destinationCustomer.distanceTo(jlMtHaryono) / 1000
+        val distanceToJlMayjendSoetojo = destinationCustomer.distanceTo(jlMayjendSoetojo) / 1000
+        val distanceToJlLetnanKarjono = destinationCustomer.distanceTo(jlLetnanKarjono) / 1000
+        val distanceToJlStadion = destinationCustomer.distanceTo(jlStadion) / 1000
+        val distanceToTerminal = destinationCustomer.distanceTo(terminalBus) / 1000
+
+        if (distanceToJlVeteran in 0F.rangeTo(0.17980675F) && distanceToJlBrengkok in 0F.rangeTo(
+                0.17980675F
+            ) || distanceToJlBrengkok in 0F.rangeTo(0.22749068F) && distanceToJlCampurSalam in 0F.rangeTo(
+                0.22749068F
+            ) || distanceToJlCampurSalam in 0F.rangeTo(0.67659587F) && distanceToJlLetjendSuprapto in 0F.rangeTo(
+                0.67659587F
+            ) || distanceToJlLetjendSuprapto in 0F.rangeTo(7.1273675F) && distanceToJlMantrianom in 0F.rangeTo(
+                7.1273675F
+            ) || distanceToJlMantrianom in 0F.rangeTo(2.6053631F) && distanceToJlJendSoedirman in 0F.rangeTo(
+                2.6053631F
+            ) || distanceToJlCampurSalam in 0F.rangeTo(0.12869798F) && distanceToJlMtHaryono in 0F.rangeTo(
+                0.12869798F
+            ) || distanceToJlMtHaryono in 0F.rangeTo(0.28119034F) && distanceToJlMayjendSoetojo in 0F.rangeTo(
+                0.28119034F
+            ) || distanceToJlMayjendSoetojo in 0F.rangeTo(0.17495409F) && distanceToJlLetnanKarjono in 0F.rangeTo(
+                0.17495409F
+            ) || distanceToJlLetnanKarjono in 0F.rangeTo(0.43860513F) && distanceToJlStadion in 0F.rangeTo(
+                0.43860513F
+            ) || distanceToJlStadion in 0F.rangeTo(0.08757355F) && distanceToTerminal in 0F.rangeTo(
+                0.08757355F
+            )
+        ) {
+            requestTrayek = trayekA
+            getTrayekAngkotB(destination)
+            binding.customBackgroundLayoutCustomer.apply {
+                cvAngkotA.visibility = View.VISIBLE
+                tvRecommendationNotFound.visibility = View.GONE
+            }
+        } else {
+            getTrayekAngkotB(destination)
+        }
+    }
+
+    private fun getTrayekAngkotB(destination: LatLng?) {
+        val trayekB = "B"
+
+        val destinationCustomer = Location("")
+        destinationCustomer.latitude = destination?.latitude ?: 0.0
+        destinationCustomer.longitude = destination?.longitude ?: 0.0
+
+        val jlVeteran = Location("")
+        jlVeteran.latitude = -7.393286634547339
+        jlVeteran.longitude = 109.70061167423222
+
+        val jlLetnanKarjono = Location("")
+        jlLetnanKarjono.latitude = -7.391957814455376
+        jlLetnanKarjono.longitude = 109.70436277113605
+
+        val jlStadion = Location("")
+        jlStadion.latitude = -7.393062008311444
+        jlStadion.longitude = 109.70493209729725
+
+        val jlAjibarangSecang = Location("")
+        jlAjibarangSecang.latitude = -7.3944717509148825
+        jlAjibarangSecang.longitude = 109.70561317241973
+
+        val jlCampurSalam = Location("")
+        jlCampurSalam.latitude = -7.3966743624237745
+        jlCampurSalam.longitude = 109.69889089680727
+
+        val jlMtHaryono = Location("")
+        jlMtHaryono.latitude = -7.395230861464321
+        jlMtHaryono.longitude = 109.69893597195728
+
+        val jlMayjendSoetojo = Location("")
+        jlMayjendSoetojo.latitude = -7.3929677430276355
+        jlMayjendSoetojo.longitude = 109.69907814958101
+
+        val jlGotongRoyong = Location("")
+        jlGotongRoyong.latitude = -7.392679466782409
+        jlGotongRoyong.longitude = 109.69252086138916
+
+        val jlAlMunawwaroh = Location("")
+        jlAlMunawwaroh.latitude = -7.392585836782173
+        jlAlMunawwaroh.longitude = 109.6900924200438
+
+        val jlPasarWage = Location("")
+        jlPasarWage.latitude = -7.399586906299058
+        jlPasarWage.longitude = 109.68603285296724
+
+        val jlBrengkok = Location("")
+        jlBrengkok.latitude = -7.397107412864937
+        jlBrengkok.longitude = 109.69303324895357
+
+        val jlSingamerta = Location("")
+        jlSingamerta.latitude = -7.39133610612604
+        jlSingamerta.longitude = 109.74286100424477
+
+        val jlMadukara = Location("")
+        jlMadukara.latitude = -7.379043887211778
+        jlMadukara.longitude = 109.74609622769049
+
+        val jlRejasa = Location("")
+        jlRejasa.latitude = -7.387036588738758
+        jlRejasa.longitude = 109.690708412322
+
+        val jlSunanGripit = Location("")
+        jlSunanGripit.latitude = -7.392681363604244
+        jlSunanGripit.longitude = 109.69503606555965
+
+//        val distanceOne = jlVeteran.distanceTo(jlLetnanKarjono) / 1000
+//        val distanceTwo = jlLetnanKarjono.distanceTo(jlStadion) / 1000
+//        val distanceThree = jlStadion.distanceTo(jlAjibarangSecang) / 1000
+//        val distanceFour = jlAjibarangSecang.distanceTo(jlCampurSalam) / 1000
+//        val distanceFive = jlCampurSalam.distanceTo(jlMtHaryono) / 1000
+//        val distanceSix = jlMtHaryono.distanceTo(jlMayjendSoetojo) / 1000
+//        val distanceSeven = jlMayjendSoetojo.distanceTo(jlGotongRoyong) / 1000
+//        val distanceEight = jlGotongRoyong.distanceTo(jlAlMunawwaroh) / 1000
+//        val distanceNine = jlAlMunawwaroh.distanceTo(jlPasarWage) / 1000
+//        val distanceTen = jlPasarWage.distanceTo(jlBrengkok) / 1000
+//        val distanceEleven = jlBrengkok.distanceTo(jlSingamerta) / 1000
+//        val distanceTwelve = jlSingamerta.distanceTo(jlKenteng) / 1000
+//        val distanceThirteen = jlKenteng.distanceTo(jlRejasa) / 1000
+//        val distanceFourteen = jlRejasa.distanceTo(jlSunanGripit) / 1000
+//        val distanceFifteen = jlSunanGripit.distanceTo(jlMayjendSoetojo) / 1000
+//        val distanceSixteen = jlMayjendSoetojo.distanceTo(jlVeteran) / 1000
+        val distanceOne = jlSingamerta.distanceTo(jlMadukara) / 1000
+        val distanceTwo = jlMadukara.distanceTo(jlRejasa) / 1000
+//
+//        Log.d("CEK", distanceOne.toString())
+//        Log.d("CEK", distanceTwo.toString())
+//        Log.d("CEK", distanceThree.toString())
+//        Log.d("CEK", distanceFour.toString())
+//        Log.d("CEK", distanceFive.toString())
+//        Log.d("CEK", distanceSix.toString())
+//        Log.d("CEK", distanceSeven.toString())
+//        Log.d("CEK", distanceEight.toString())
+//        Log.d("CEK", distanceNine.toString())
+//        Log.d("CEK", distanceTen.toString())
+//        Log.d("CEK", distanceEleven.toString())
+//        Log.d("CEK", distanceTwelve.toString())
+//        Log.d("CEK", distanceThirteen.toString())
+//        Log.d("CEK", distanceFourteen.toString())
+//        Log.d("CEK", distanceFifteen.toString())
+//        Log.d("CEK", distanceSixteen.toString())
+
+        Log.d("CEK", distanceOne.toString())
+        Log.d("CEK", distanceTwo.toString())
+
+        val distanceToJlVeteran = destinationCustomer.distanceTo(jlVeteran) / 1000
+        val distanceToJlLetnanKarjono = destinationCustomer.distanceTo(jlLetnanKarjono) / 1000
+        val distanceToJlStadion = destinationCustomer.distanceTo(jlStadion) / 1000
+        val distanceToJlAjibarangSecang = destinationCustomer.distanceTo(jlAjibarangSecang) / 1000
+        val distanceToJlCampurSalam = destinationCustomer.distanceTo(jlCampurSalam) / 1000
+        val distanceToJlMtHaryono = destinationCustomer.distanceTo(jlMtHaryono) / 1000
+        val distanceToJlMayjendSoetojo = destinationCustomer.distanceTo(jlMayjendSoetojo) / 1000
+        val distanceToJlGotongRoyong = destinationCustomer.distanceTo(jlGotongRoyong) / 1000
+        val distanceToJlAlMunawwaroh = destinationCustomer.distanceTo(jlAlMunawwaroh) / 1000
+        val distanceToJlPasarWage = destinationCustomer.distanceTo(jlPasarWage) / 1000
+        val distanceToJlBrengkok = destinationCustomer.distanceTo(jlBrengkok) / 1000
+        val distanceToJlSingamerta = destinationCustomer.distanceTo(jlSingamerta) / 1000
+        val distanceToJlMadukara = destinationCustomer.distanceTo(jlMadukara) / 1000
+        val distanceToJlRejasa = destinationCustomer.distanceTo(jlRejasa) / 1000
+        val distanceToJlSunanGripit = destinationCustomer.distanceTo(jlSunanGripit) / 1000
+
+        if (distanceToJlVeteran in 0F.rangeTo(0.43942437F) && distanceToJlLetnanKarjono in 0F.rangeTo(
+                0.43942437F
+            ) || distanceToJlLetnanKarjono in 0F.rangeTo(0.1373421F) && distanceToJlStadion in 0F.rangeTo(
+                0.1373421F
+            ) || distanceToJlStadion in 0F.rangeTo(0.17309159F) && distanceToJlAjibarangSecang in 0F.rangeTo(
+                0.17309159F
+            ) || distanceToJlAjibarangSecang in 0F.rangeTo(0.78109133F) && distanceToJlCampurSalam in 0F.rangeTo(
+                0.78109133F
+            ) || distanceToJlCampurSalam in 0F.rangeTo(0.15971817F) && distanceToJlMtHaryono in 0F.rangeTo(
+                0.15971817F
+            ) || distanceToJlMtHaryono in 0F.rangeTo(0.25077602F) && distanceToJlMayjendSoetojo in 0F.rangeTo(
+                0.25077602F
+            ) || distanceToJlMayjendSoetojo in 0F.rangeTo(0.72462785F) && distanceToJlGotongRoyong in 0F.rangeTo(
+                0.72462785F
+            ) || distanceToJlGotongRoyong in 0F.rangeTo(0.2683005F) && distanceToJlAlMunawwaroh in 0F.rangeTo(
+                0.2683005F
+            ) || distanceToJlAlMunawwaroh in 0F.rangeTo(0.89462245F) && distanceToJlPasarWage in 0F.rangeTo(
+                0.89462245F
+            ) || distanceToJlPasarWage in 0F.rangeTo(0.8200417F) && distanceToJlBrengkok in 0F.rangeTo(
+                0.8200417F
+            ) || distanceToJlBrengkok in 0F.rangeTo(5.5378833F) && distanceToJlSingamerta in 0F.rangeTo(
+                5.5378833F
+            ) || distanceToJlSingamerta in 0F.rangeTo(1.4055679F) && distanceToJlMadukara in 0F.rangeTo(
+                1.4055679F
+            ) || distanceToJlMadukara in 0F.rangeTo(6.17852F) && distanceToJlRejasa in 0F.rangeTo(
+                6.17852F
+            ) || distanceToJlRejasa in 0F.rangeTo(0.78612006F) && distanceToJlSunanGripit in 0F.rangeTo(
+                0.78612006F
+            )
+        ) {
+            requestTrayek = trayekB
+            getTrayekAngkotC(destination)
+            binding.customBackgroundLayoutCustomer.apply {
+                cvAngkotB.visibility = View.VISIBLE
+                tvRecommendationNotFound.visibility = View.GONE
+            }
+        } else {
+            getTrayekAngkotC(destination)
+        }
+    }
+
+    private fun getTrayekAngkotC(destination: LatLng?) {
+        val trayekC = "C"
+
+        val destinationCustomer = Location("")
+        destinationCustomer.latitude = destination?.latitude ?: 0.0
+        destinationCustomer.longitude = destination?.longitude ?: 0.0
+
+        val jlVeteran = Location("")
+        jlVeteran.latitude = -7.394840142095557
+        jlVeteran.longitude = 109.70068781164427
+
+        val jlCampurSalam = Location("")
+        jlCampurSalam.latitude = -7.3966743624237745
+        jlCampurSalam.longitude = 109.69889089680727
+
+        val jlLetjendSuprapto = Location("")
+        jlLetjendSuprapto.latitude = -7.399562570467833
+        jlLetjendSuprapto.longitude = 109.68604454812801
+
+        val jlAlmunawwaroh = Location("")
+        jlAlmunawwaroh.latitude = -7.395031113044718
+        jlAlmunawwaroh.longitude = 109.69012034651269
+
+        val jlGotongRoyong = Location("")
+        jlGotongRoyong.latitude = -7.392543046575512
+        jlGotongRoyong.longitude = 109.69011758939891
+
+        val jlSunanGripit = Location("")
+        jlSunanGripit.latitude = -7.392493680039571
+        jlSunanGripit.longitude = 109.69502404608019
+
+        val jlPetambakan = Location("")
+        jlPetambakan.latitude = -7.385932436549343
+        jlPetambakan.longitude = 109.69113398260461
+
+        val jlBanjarmangu = Location("")
+        jlBanjarmangu.latitude = -7.359293959744121
+        jlBanjarmangu.longitude = 109.6918696216978
+
+        val polsekBanjarmangu = Location("")
+        polsekBanjarmangu.latitude = -7.36054271148776
+        polsekBanjarmangu.longitude = 109.68800802062427
+
+        val jlKiJagapati = Location("")
+        jlKiJagapati.latitude = -7.391222574387803
+        jlKiJagapati.longitude = 109.69513972955063
+
+        val jlMayjendSoetojo = Location("")
+        jlMayjendSoetojo.latitude = -7.3929782667728965
+        jlMayjendSoetojo.longitude = 109.70048342573183
+
+        val jlMtHaryono = Location("")
+        jlMtHaryono.latitude = -7.395230861464321
+        jlMtHaryono.longitude = 109.69893597195728
+
+//        val distanceOne = jlVeteran.distanceTo(jlCampurSalam) / 1000
+//        val distanceTwo = jlCampurSalam.distanceTo(jlLetjendSuprapto) / 1000
+//        val distanceThree = jlLetjendSuprapto.distanceTo(jlAlmunawwaroh) / 1000
+//        val distanceFour = jlAlmunawwaroh.distanceTo(jlGotongRoyong) / 1000
+//        val distanceFive = jlGotongRoyong.distanceTo(jlSunanGripit) / 1000
+//        val distanceSix = jlSunanGripit.distanceTo(jlPetambakan) / 1000
+//        val distanceSeven = jlPetambakan.distanceTo(jlBanjarmangu) / 1000
+//        val distanceEight = jlBanjarmangu.distanceTo(polsekBanjarmangu) / 1000
+//        val distanceNine = polsekBanjarmangu.distanceTo(jlKiJagapati) / 1000
+//        val distanceTen = jlKiJagapati.distanceTo(jlMayjendSoetojo) / 1000
+//        val distanceEleven = jlMayjendSoetojo.distanceTo(jlGotongRoyong) / 1000
+//        val distanceTwelve = jlGotongRoyong.distanceTo(jlAlmunawwaroh) / 1000
+//        val distanceThirteen = jlAlmunawwaroh.distanceTo(jlLetjendSuprapto) / 1000
+//        val distanceFourteen = jlLetjendSuprapto.distanceTo(jlCampurSalam) / 1000
+//        val distanceFifteen = jlCampurSalam.distanceTo(jlMtHaryono) / 1000
+//        val distanceSixteen = jlMtHaryono.distanceTo(jlMayjendSoetojo) / 1000
+//        val distanceSeventeen = jlMayjendSoetojo.distanceTo(jlVeteran) / 1000
+//
+//        Log.d("CEK", distanceOne.toString())
+//        Log.d("CEK", distanceTwo.toString())
+//        Log.d("CEK", distanceThree.toString())
+//        Log.d("CEK", distanceFour.toString())
+//        Log.d("CEK", distanceFive.toString())
+//        Log.d("CEK", distanceSix.toString())
+//        Log.d("CEK", distanceSeven.toString())
+//        Log.d("CEK", distanceEight.toString())
+//        Log.d("CEK", distanceNine.toString())
+//        Log.d("CEK", distanceTen.toString())
+//        Log.d("CEK", distanceEleven.toString())
+//        Log.d("CEK", distanceTwelve.toString())
+//        Log.d("CEK", distanceThirteen.toString())
+//        Log.d("CEK", distanceFourteen.toString())
+//        Log.d("CEK", distanceFifteen.toString())
+//        Log.d("CEK", distanceSixteen.toString())
+//        Log.d("CEK", distanceSeventeen.toString())
+
+        val distanceToJlVeteran = destinationCustomer.distanceTo(jlVeteran) / 1000
+        val distanceToJlCampurSalam = destinationCustomer.distanceTo(jlCampurSalam) / 1000
+        val distanceToJlLetjendSupraptop = destinationCustomer.distanceTo(jlLetjendSuprapto) / 1000
+        val distanceToJlAlmunawwaroh = destinationCustomer.distanceTo(jlAlmunawwaroh) / 1000
+        val distanceToJlGotongRoyong = destinationCustomer.distanceTo(jlGotongRoyong) / 1000
+        val distanceToJlSunanGripit = destinationCustomer.distanceTo(jlSunanGripit) / 1000
+        val distanceToJlPetambakan = destinationCustomer.distanceTo(jlPetambakan) / 1000
+        val distanceToJlBanjarmangu = destinationCustomer.distanceTo(jlBanjarmangu) / 1000
+        val distanceToPolsekBanjarmangu = destinationCustomer.distanceTo(polsekBanjarmangu) / 1000
+        val distanceToJlKiJagapati = destinationCustomer.distanceTo(jlKiJagapati) / 1000
+        val distanceToJlMayjendSoetojo = destinationCustomer.distanceTo(jlMayjendSoetojo) / 1000
+        val distanceToJlMtHaryono = destinationCustomer.distanceTo(jlMtHaryono) / 1000
+
+        if (distanceToJlVeteran in 0F.rangeTo(0.28372997F) && distanceToJlCampurSalam in 0F.rangeTo(
+                0.28372997F
+            ) || distanceToJlCampurSalam in 0F.rangeTo(1.4537477F) && distanceToJlLetjendSupraptop in 0F.rangeTo(
+                1.4537477F
+            ) || distanceToJlLetjendSupraptop in 0F.rangeTo(0.67350984F) && distanceToJlAlmunawwaroh in 0F.rangeTo(
+                0.67350984F
+            ) || distanceToJlAlmunawwaroh in 0F.rangeTo(0.27516207F) && distanceToJlGotongRoyong in 0F.rangeTo(
+                0.27516207F
+            ) || distanceToJlGotongRoyong in 0F.rangeTo(0.5417019F) && distanceToJlSunanGripit in 0F.rangeTo(
+                0.5417019F
+            ) || distanceToJlSunanGripit in 0F.rangeTo(0.84319293F) && distanceToJlPetambakan in 0F.rangeTo(
+                0.84319293F
+            ) || distanceToJlPetambakan in 0F.rangeTo(2.9471366F) && distanceToJlBanjarmangu in 0F.rangeTo(
+                2.9471366F
+            ) || distanceToJlBanjarmangu in 0F.rangeTo(0.4481622F) && distanceToPolsekBanjarmangu in 0F.rangeTo(
+                0.4481622F
+            ) || distanceToPolsekBanjarmangu in 0F.rangeTo(3.4831262F) && distanceToJlKiJagapati in 0F.rangeTo(
+                3.4831262F
+            ) || distanceToJlKiJagapati in 0F.rangeTo(0.6210776F) && distanceToJlMayjendSoetojo in 0F.rangeTo(
+                0.6210776F
+            ) || distanceToJlMayjendSoetojo in 0F.rangeTo(1.1454027F) && distanceToJlGotongRoyong in 0F.rangeTo(
+                1.1454027F
+            ) || distanceToJlGotongRoyong in 0F.rangeTo(0.27516207F) && distanceToJlAlmunawwaroh in 0F.rangeTo(
+                0.27516207F
+            ) || distanceToJlAlmunawwaroh in 0F.rangeTo(0.67350984F) && distanceToJlLetjendSupraptop in 0F.rangeTo(
+                0.67350984F
+            ) || distanceToJlLetjendSupraptop in 0F.rangeTo(1.4537477F) && distanceToJlCampurSalam in 0F.rangeTo(
+                1.4537477F
+            ) || distanceToJlCampurSalam in 0F.rangeTo(0.15971817F) && distanceToJlMtHaryono in 0F.rangeTo(
+                0.15971817F
+            ) || distanceToJlMtHaryono in 0F.rangeTo(0.302071F) && distanceToJlMayjendSoetojo in 0F.rangeTo(
+                0.302071F
+            ) || distanceToJlMayjendSoetojo in 0F.rangeTo(0.2071424F) && distanceToJlVeteran in 0F.rangeTo(
+                0.2071424F
+            )
+        ) {
+            requestTrayek = trayekC
+            getTrayekAngkotD(destination)
+            binding.customBackgroundLayoutCustomer.apply {
+                cvAngkotC.visibility = View.VISIBLE
+                tvRecommendationNotFound.visibility = View.GONE
+            }
+        } else {
+            getTrayekAngkotD(destination)
+        }
+    }
+
+    private fun getTrayekAngkotD(destination: LatLng?) {
+        val trayekD = "D"
+
+        val destinationCustomer = Location("")
+        destinationCustomer.latitude = destination?.latitude ?: 0.0
+        destinationCustomer.longitude = destination?.longitude ?: 0.0
+
+        val jlVeteran = Location("")
+        jlVeteran.latitude = -7.393286634547339
+        jlVeteran.longitude = 109.70061167423222
+
+        val jlLetnanKarjono = Location("")
+        jlLetnanKarjono.latitude = -7.391957814455376
+        jlLetnanKarjono.longitude = 109.70436277113605
+
+        val jlStadion = Location("")
+        jlStadion.latitude = -7.393062008311444
+        jlStadion.longitude = 109.70493209729725
+
+        val jlAjibarangSecang = Location("")
+        jlAjibarangSecang.latitude = -7.3944717509148825
+        jlAjibarangSecang.longitude = 109.70561317241973
+
+        val jlCampurSalam = Location("")
+        jlCampurSalam.latitude = -7.3966743624237745
+        jlCampurSalam.longitude = 109.69889089680727
+
+        val jlMtHaryono = Location("")
+        jlMtHaryono.latitude = -7.395230861464321
+        jlMtHaryono.longitude = 109.69893597195728
+
+        val jlMayjendSoetojo = Location("")
+        jlMayjendSoetojo.latitude = -7.3929677430276355
+        jlMayjendSoetojo.longitude = 109.69907814958101
+
+        val jlSunanGripit = Location("")
+        jlSunanGripit.latitude = -7.3925535821418125
+        jlSunanGripit.longitude = 109.6950338758701
+
+        val jlRejasa = Location("")
+        jlRejasa.latitude = -7.387036260108403
+        jlRejasa.longitude = 109.69070857427552
+
+        val jlMadukara = Location("")
+        jlMadukara.latitude = -7.379043887211778
+        jlMadukara.longitude = 109.74609622769049
+
+        val jlSingamerta = Location("")
+        jlSingamerta.latitude = -7.391250422958347
+        jlSingamerta.longitude = 109.74284967730786
+
+        val jlLetjendSuprapto = Location("")
+        jlLetjendSuprapto.latitude = -7.399571113858571
+        jlLetjendSuprapto.longitude = 109.68601952525529
+
+        val jlAlMunawwaroh = Location("")
+        jlAlMunawwaroh.latitude = -7.395129593968356
+        jlAlMunawwaroh.longitude = 109.69013935139593
+
+        val jlGotongRoyong = Location("")
+        jlGotongRoyong.latitude = -7.392545545002634
+        jlGotongRoyong.longitude = 109.69011664584171
+
+//        val distanceOne = jlVeteran.distanceTo(jlLetnanKarjono) / 1000
+//        val distanceTwo = jlLetnanKarjono.distanceTo(jlStadion) / 1000
+//        val distanceThree = jlStadion.distanceTo(jlAjibarangSecang) / 1000
+//        val distanceFour = jlAjibarangSecang.distanceTo(jlCampurSalam) / 1000
+//        val distanceFive = jlCampurSalam.distanceTo(jlMtHaryono) / 1000
+//        val distanceSix = jlMtHaryono.distanceTo(jlMayjendSoetojo) / 1000
+//        val distanceSeven = jlMayjendSoetojo.distanceTo(jlSunanGripit) / 1000
+//        val distanceEight = jlSunanGripit.distanceTo(jlRejasa) / 1000
+//        val distanceNine = jlRejasa.distanceTo(jlMadukara) / 1000
+//        val distanceTen = jlMadukara.distanceTo(jlSingamerta) / 1000
+//        val distanceEleven = jlSingamerta.distanceTo(jlLetjendSuprapto) / 1000
+//        val distanceTwelve = jlLetjendSuprapto.distanceTo(jlAlMunawwaroh) / 1000
+//        val distanceThirteen = jlAlMunawwaroh.distanceTo(jlGotongRoyong) / 1000
+//        val distanceFourteen = jlGotongRoyong.distanceTo(jlMayjendSoetojo) / 1000
+//        val distanceFifteen = jlMayjendSoetojo.distanceTo(jlVeteran) / 1000
+//
+//        Log.d("CEK", distanceOne.toString())
+//        Log.d("CEK", distanceTwo.toString())
+//        Log.d("CEK", distanceThree.toString())
+//        Log.d("CEK", distanceFour.toString())
+//        Log.d("CEK", distanceFive.toString())
+//        Log.d("CEK", distanceSix.toString())
+//        Log.d("CEK", distanceSeven.toString())
+//        Log.d("CEK", distanceEight.toString())
+//        Log.d("CEK", distanceNine.toString())
+//        Log.d("CEK", distanceTen.toString())
+//        Log.d("CEK", distanceEleven.toString())
+//        Log.d("CEK", distanceTwelve.toString())
+//        Log.d("CEK", distanceThirteen.toString())
+//        Log.d("CEK", distanceFourteen.toString())
+//        Log.d("CEK", distanceFifteen.toString())
+
+        val distanceToJlVeteran = destinationCustomer.distanceTo(jlVeteran) / 1000
+        val distanceToJlLetnanKarjono = destinationCustomer.distanceTo(jlLetnanKarjono) / 1000
+        val distanceToJlStadion = destinationCustomer.distanceTo(jlStadion) / 1000
+        val distanceToJlAjibarangSecang = destinationCustomer.distanceTo(jlAjibarangSecang) / 1000
+        val distanceToJlCampurSalam = destinationCustomer.distanceTo(jlCampurSalam) / 1000
+        val distanceToJlMtHaryono = destinationCustomer.distanceTo(jlMtHaryono) / 1000
+        val distanceToJlMayjendSoetojo = destinationCustomer.distanceTo(jlMayjendSoetojo) / 1000
+        val distanceToJlSunanGripit = destinationCustomer.distanceTo(jlSunanGripit) / 1000
+        val distanceToJlRejasa = destinationCustomer.distanceTo(jlRejasa) / 1000
+        val distanceToJlMadukara = destinationCustomer.distanceTo(jlMadukara) / 1000
+        val distanceToJlSingamerta = destinationCustomer.distanceTo(jlSingamerta) / 1000
+        val distanceToJlLetjendSuprapto = destinationCustomer.distanceTo(jlLetjendSuprapto) / 1000
+        val distanceToJlAlMunawwaroh = destinationCustomer.distanceTo(jlAlMunawwaroh) / 1000
+        val distanceToJlGotongRoyong = destinationCustomer.distanceTo(jlGotongRoyong) / 1000
+
+        if (distanceToJlVeteran in 0F.rangeTo(0.43942437F) && distanceToJlLetnanKarjono in 0F.rangeTo(
+                0.43942437F
+            ) || distanceToJlLetnanKarjono in 0F.rangeTo(0.1373421F) && distanceToJlStadion in 0F.rangeTo(
+                0.1373421F
+            ) || distanceToJlStadion in 0F.rangeTo(0.17309159F) && distanceToJlAjibarangSecang in 0F.rangeTo(
+                0.17309159F
+            ) || distanceToJlAjibarangSecang in 0F.rangeTo(0.78109133F) && distanceToJlCampurSalam in 0F.rangeTo(
+                0.78109133F
+            ) || distanceToJlCampurSalam in 0F.rangeTo(0.15971817F) && distanceToJlMtHaryono in 0F.rangeTo(
+                0.15971817F
+            ) || distanceToJlMtHaryono in 0F.rangeTo(0.25077602F) && distanceToJlMayjendSoetojo in 0F.rangeTo(
+                0.25077602F
+            ) || distanceToJlMayjendSoetojo in 0F.rangeTo(0.44883206F) && distanceToJlSunanGripit in 0F.rangeTo(
+                0.44883206F
+            ) || distanceToJlSunanGripit in 0F.rangeTo(0.77481407F) && distanceToJlRejasa in 0F.rangeTo(
+                0.77481407F
+            ) || distanceToJlRejasa in 0F.rangeTo(6.178497F) && distanceToJlMadukara in 0F.rangeTo(
+                6.178497F
+            ) || distanceToJlMadukara in 0F.rangeTo(1.3967254F) && distanceToJlSingamerta in 0F.rangeTo(
+                1.3967254F
+            ) || distanceToJlSingamerta in 0F.rangeTo(6.34115F) && distanceToJlLetjendSuprapto in 0F.rangeTo(
+                6.34115F
+            ) || distanceToJlLetjendSuprapto in 0F.rangeTo(0.6694348F) && distanceToJlAlMunawwaroh in 0F.rangeTo(
+                0.6694348F
+            ) || distanceToJlAlMunawwaroh in 0F.rangeTo(0.28578788F) && distanceToJlGotongRoyong in 0F.rangeTo(
+                0.28578788F
+            ) || distanceToJlGotongRoyong in 0F.rangeTo(0.9904535F) && distanceToJlMayjendSoetojo in 0F.rangeTo(
+                0.9904535F
+            ) || distanceToJlMayjendSoetojo in 0F.rangeTo(0.1729356F) && distanceToJlVeteran in 0F.rangeTo(
+                0.1729356F
+            )
+        ) {
+            requestTrayek = trayekD
+            binding.customBackgroundLayoutCustomer.apply {
+                cvAngkotD.visibility = View.VISIBLE
+                tvRecommendationNotFound.visibility = View.GONE
+            }
+        } else {
+            binding.customBackgroundLayoutCustomer.apply {
+                tvRecommendationNotFound.visibility = View.VISIBLE
+            }
+        }
     }
 
     // function to get customer profile
@@ -830,14 +1431,6 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
             if (isRequestAngkot) {
                 endRide()
             } else {
-                val selectedIdTrayek =
-                    binding.customBackgroundLayoutCustomer.rgTrayek.checkedRadioButtonId
-                val radioTrayek = findViewById<RadioButton>(selectedIdTrayek)
-                if (radioTrayek.text == null) {
-                    return
-                }
-                requestTrayek = radioTrayek.text.toString()
-
                 isRequestAngkot = true
                 // add current location customer request
                 val customerId = firebaseAuth.currentUser?.uid

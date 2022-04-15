@@ -154,10 +154,10 @@ class DetailCustomerHistoryActivity : AppCompatActivity(), OnMapReadyCallback, R
         }
     }
 
-    // function to get route marker
+    // function to get route marker API KEY
     private fun getRouteToMarker(locationLatLng: LatLng, destinationLatLng: LatLng) {
         val routing = Routing.Builder()
-            .key("API_KEY")
+            .key("AIzaSyDTJ2xuEs3k5e5yADs93VwiqcapyO5AT6M")
             .travelMode(AbstractRouting.TravelMode.DRIVING)
             .withListener(this)
             .alternativeRoutes(false)
@@ -203,7 +203,7 @@ class DetailCustomerHistoryActivity : AppCompatActivity(), OnMapReadyCallback, R
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_user))
             )
             mMap.addMarker(
-                MarkerOptions().position(LatLng(locationLat, locationLng)).title("Your destination")
+                MarkerOptions().position(LatLng(destinationLat, destinationLng)).title("Your destination")
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_destination_pin))
             )
         }

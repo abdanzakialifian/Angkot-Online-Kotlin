@@ -66,7 +66,7 @@ class CustomerProfileActivity : AppCompatActivity(), View.OnClickListener {
 
         // add event click to button
         binding.apply {
-            customActionBar.btnBack.setOnClickListener(this@CustomerProfileActivity)
+            btnBack.setOnClickListener(this@CustomerProfileActivity)
             edtBirthdate.setOnClickListener(this@CustomerProfileActivity)
             btnSave.setOnClickListener(this@CustomerProfileActivity)
             imgProfile.setOnClickListener(this@CustomerProfileActivity)
