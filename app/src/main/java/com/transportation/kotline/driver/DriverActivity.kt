@@ -308,7 +308,11 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         // initialization variable status
-                        status = 1
+                        status = if (status < 1) {
+                            1
+                        } else {
+                            2
+                        }
 
                         val map: Map<String?, Any?>? = snapshot.getValue(gti)
 
@@ -618,6 +622,8 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
 
     // function to end ride
     private fun endRide() {
+        status = 0
+
         binding.customBackgroundLayoutDriver.btnRideStatus.text =
             resources.getString(R.string.picked_customer)
 
@@ -940,12 +946,6 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
             // check status
             when (status) {
                 1 -> {
-                    // initialization variable status
-                    status = 2
-
-                    binding.customBackgroundLayoutDriver.btnRideStatus.text =
-                        resources.getString(R.string.drive_completed)
-
                     val driverId = firebaseAuth.currentUser?.uid
                     val driverRef =
                         firebaseDatabase.reference.child("Users").child("Drivers")
@@ -953,6 +953,12 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
                     val customerRequest = HashMap<String, Any>()
                     customerRequest["isPicked"] = true
                     driverRef.updateChildren(customerRequest)
+
+                    binding.customBackgroundLayoutDriver.btnRideStatus.text =
+                        resources.getString(R.string.drive_completed)
+
+                    // initialization variable status
+                    status = 2
                 }
                 2 -> {
                     // call function to record history

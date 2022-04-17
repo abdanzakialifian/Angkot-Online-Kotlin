@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.MenuItem
@@ -72,7 +73,10 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
     private var pickUpMarker: Marker? = null
     private var destination: String? = null
     private var address: String? = null
-    private var requestTrayek: String? = null
+    private var requestTrayekA: String? = null
+    private var requestTrayekB: String? = null
+    private var requestTrayekC: String? = null
+    private var requestTrayekD: String? = null
     private var driverFound = false
     private var isZoomUpdate = false
     private var isRequestAngkot = false
@@ -202,10 +206,8 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
             this.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
-        binding.customBackgroundLayoutCustomer.apply {
-            // add event click to button request
-            btnRequestAngkot.setOnClickListener(this@CustomerActivity)
-        }
+        // add event click to button request
+        binding.customBackgroundLayoutCustomer.btnRequestAngkot.setOnClickListener(this@CustomerActivity)
 
         // call function get customer profile in navigation drawer
         getCustomerProfile()
@@ -213,9 +215,14 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         // call class is application turned off
         startService(Intent(this, ApplicationTurnedOff::class.java))
 
-        val dstnLatLng = LatLng(-7.381635590413542, 109.74607270244847)
-
-        getTrayekAngkotA(dstnLatLng)
+        // dummy
+        binding.btnTrayek.setOnClickListener {
+            val dstnLatLng = LatLng(-7.391941880752538, 109.72446212660867)
+            getTrayekAngkotA(dstnLatLng)
+            getTrayekAngkotB(dstnLatLng)
+            getTrayekAngkotC(dstnLatLng)
+            getTrayekAngkotD(dstnLatLng)
+        }
     }
 
     private fun getTrayekAngkotA(destination: LatLng?) {
@@ -269,30 +276,6 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         terminalBus.latitude = -7.392655920315736
         terminalBus.longitude = 109.70482103417467
 
-//        val distanceOne = jlVeteran.distanceTo(jlCampurSalam) / 1000
-//        val distanceTwo = jlVeteran.distanceTo(jlBrengkok) / 1000
-//        val distanceThree = jlBrengkok.distanceTo(jlCampurSalam) / 1000
-//        val distanceFour = jlCampurSalam.distanceTo(jlLetjendSuprapto) / 1000
-//        val distanceFive = jlLetjendSuprapto.distanceTo(jlMantrianom) / 1000
-//        val distanceSix = jlMantrianom.distanceTo(jlJendSoedirman) / 1000
-//        val distanceSeven = jlCampurSalam.distanceTo(jlMtHaryono) / 1000
-//        val distanceEight = jlMtHaryono.distanceTo(jlMayjendSoetojo) / 1000
-//        val distanceNine = jlMayjendSoetojo.distanceTo(jlLetnanKarjono) / 1000
-//        val distanceTen = jlLetnanKarjono.distanceTo(jlStadion) / 1000
-//        val distanceEleven = jlStadion.distanceTo(terminalBus) / 1000
-
-//        Log.d("CEK", distanceOne.toString())
-//        Log.d("CEK", distanceTwo.toString())
-//        Log.d("CEK", distanceThree.toString())
-//        Log.d("CEK", distanceFour.toString())
-//        Log.d("CEK", distanceFive.toString())
-//        Log.d("CEK", distanceSix.toString())
-//        Log.d("CEK", distanceSeven.toString())
-//        Log.d("CEK", distanceEight.toString())
-//        Log.d("CEK", distanceNine.toString())
-//        Log.d("CEK", distanceTen.toString())
-//        Log.d("CEK", distanceEleven.toString())
-
         val distanceToJlVeteran = destinationCustomer.distanceTo(jlVeteran) / 1000
         val distanceToJlBrengkok = destinationCustomer.distanceTo(jlBrengkok) / 1000
         val distanceToJlCampurSalam = destinationCustomer.distanceTo(jlCampurSalam) / 1000
@@ -327,14 +310,12 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                 0.08757355F
             )
         ) {
-            requestTrayek = trayekA
-            getTrayekAngkotB(destination)
+            requestTrayekA = trayekA
             binding.customBackgroundLayoutCustomer.apply {
                 cvAngkotA.visibility = View.VISIBLE
-                tvRecommendationNotFound.visibility = View.GONE
+                tvRecommendationNotFound.visibility =
+                    View.GONE
             }
-        } else {
-            getTrayekAngkotB(destination)
         }
     }
 
@@ -405,45 +386,6 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         jlSunanGripit.latitude = -7.392681363604244
         jlSunanGripit.longitude = 109.69503606555965
 
-//        val distanceOne = jlVeteran.distanceTo(jlLetnanKarjono) / 1000
-//        val distanceTwo = jlLetnanKarjono.distanceTo(jlStadion) / 1000
-//        val distanceThree = jlStadion.distanceTo(jlAjibarangSecang) / 1000
-//        val distanceFour = jlAjibarangSecang.distanceTo(jlCampurSalam) / 1000
-//        val distanceFive = jlCampurSalam.distanceTo(jlMtHaryono) / 1000
-//        val distanceSix = jlMtHaryono.distanceTo(jlMayjendSoetojo) / 1000
-//        val distanceSeven = jlMayjendSoetojo.distanceTo(jlGotongRoyong) / 1000
-//        val distanceEight = jlGotongRoyong.distanceTo(jlAlMunawwaroh) / 1000
-//        val distanceNine = jlAlMunawwaroh.distanceTo(jlPasarWage) / 1000
-//        val distanceTen = jlPasarWage.distanceTo(jlBrengkok) / 1000
-//        val distanceEleven = jlBrengkok.distanceTo(jlSingamerta) / 1000
-//        val distanceTwelve = jlSingamerta.distanceTo(jlKenteng) / 1000
-//        val distanceThirteen = jlKenteng.distanceTo(jlRejasa) / 1000
-//        val distanceFourteen = jlRejasa.distanceTo(jlSunanGripit) / 1000
-//        val distanceFifteen = jlSunanGripit.distanceTo(jlMayjendSoetojo) / 1000
-//        val distanceSixteen = jlMayjendSoetojo.distanceTo(jlVeteran) / 1000
-        val distanceOne = jlSingamerta.distanceTo(jlMadukara) / 1000
-        val distanceTwo = jlMadukara.distanceTo(jlRejasa) / 1000
-//
-//        Log.d("CEK", distanceOne.toString())
-//        Log.d("CEK", distanceTwo.toString())
-//        Log.d("CEK", distanceThree.toString())
-//        Log.d("CEK", distanceFour.toString())
-//        Log.d("CEK", distanceFive.toString())
-//        Log.d("CEK", distanceSix.toString())
-//        Log.d("CEK", distanceSeven.toString())
-//        Log.d("CEK", distanceEight.toString())
-//        Log.d("CEK", distanceNine.toString())
-//        Log.d("CEK", distanceTen.toString())
-//        Log.d("CEK", distanceEleven.toString())
-//        Log.d("CEK", distanceTwelve.toString())
-//        Log.d("CEK", distanceThirteen.toString())
-//        Log.d("CEK", distanceFourteen.toString())
-//        Log.d("CEK", distanceFifteen.toString())
-//        Log.d("CEK", distanceSixteen.toString())
-
-        Log.d("CEK", distanceOne.toString())
-        Log.d("CEK", distanceTwo.toString())
-
         val distanceToJlVeteran = destinationCustomer.distanceTo(jlVeteran) / 1000
         val distanceToJlLetnanKarjono = destinationCustomer.distanceTo(jlLetnanKarjono) / 1000
         val distanceToJlStadion = destinationCustomer.distanceTo(jlStadion) / 1000
@@ -490,14 +432,12 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                 0.78612006F
             )
         ) {
-            requestTrayek = trayekB
-            getTrayekAngkotC(destination)
+            requestTrayekB = trayekB
             binding.customBackgroundLayoutCustomer.apply {
                 cvAngkotB.visibility = View.VISIBLE
-                tvRecommendationNotFound.visibility = View.GONE
+                tvRecommendationNotFound.visibility =
+                    View.GONE
             }
-        } else {
-            getTrayekAngkotC(destination)
         }
     }
 
@@ -556,42 +496,6 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         jlMtHaryono.latitude = -7.395230861464321
         jlMtHaryono.longitude = 109.69893597195728
 
-//        val distanceOne = jlVeteran.distanceTo(jlCampurSalam) / 1000
-//        val distanceTwo = jlCampurSalam.distanceTo(jlLetjendSuprapto) / 1000
-//        val distanceThree = jlLetjendSuprapto.distanceTo(jlAlmunawwaroh) / 1000
-//        val distanceFour = jlAlmunawwaroh.distanceTo(jlGotongRoyong) / 1000
-//        val distanceFive = jlGotongRoyong.distanceTo(jlSunanGripit) / 1000
-//        val distanceSix = jlSunanGripit.distanceTo(jlPetambakan) / 1000
-//        val distanceSeven = jlPetambakan.distanceTo(jlBanjarmangu) / 1000
-//        val distanceEight = jlBanjarmangu.distanceTo(polsekBanjarmangu) / 1000
-//        val distanceNine = polsekBanjarmangu.distanceTo(jlKiJagapati) / 1000
-//        val distanceTen = jlKiJagapati.distanceTo(jlMayjendSoetojo) / 1000
-//        val distanceEleven = jlMayjendSoetojo.distanceTo(jlGotongRoyong) / 1000
-//        val distanceTwelve = jlGotongRoyong.distanceTo(jlAlmunawwaroh) / 1000
-//        val distanceThirteen = jlAlmunawwaroh.distanceTo(jlLetjendSuprapto) / 1000
-//        val distanceFourteen = jlLetjendSuprapto.distanceTo(jlCampurSalam) / 1000
-//        val distanceFifteen = jlCampurSalam.distanceTo(jlMtHaryono) / 1000
-//        val distanceSixteen = jlMtHaryono.distanceTo(jlMayjendSoetojo) / 1000
-//        val distanceSeventeen = jlMayjendSoetojo.distanceTo(jlVeteran) / 1000
-//
-//        Log.d("CEK", distanceOne.toString())
-//        Log.d("CEK", distanceTwo.toString())
-//        Log.d("CEK", distanceThree.toString())
-//        Log.d("CEK", distanceFour.toString())
-//        Log.d("CEK", distanceFive.toString())
-//        Log.d("CEK", distanceSix.toString())
-//        Log.d("CEK", distanceSeven.toString())
-//        Log.d("CEK", distanceEight.toString())
-//        Log.d("CEK", distanceNine.toString())
-//        Log.d("CEK", distanceTen.toString())
-//        Log.d("CEK", distanceEleven.toString())
-//        Log.d("CEK", distanceTwelve.toString())
-//        Log.d("CEK", distanceThirteen.toString())
-//        Log.d("CEK", distanceFourteen.toString())
-//        Log.d("CEK", distanceFifteen.toString())
-//        Log.d("CEK", distanceSixteen.toString())
-//        Log.d("CEK", distanceSeventeen.toString())
-
         val distanceToJlVeteran = destinationCustomer.distanceTo(jlVeteran) / 1000
         val distanceToJlCampurSalam = destinationCustomer.distanceTo(jlCampurSalam) / 1000
         val distanceToJlLetjendSupraptop = destinationCustomer.distanceTo(jlLetjendSuprapto) / 1000
@@ -641,14 +545,12 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                 0.2071424F
             )
         ) {
-            requestTrayek = trayekC
-            getTrayekAngkotD(destination)
+            requestTrayekC = trayekC
             binding.customBackgroundLayoutCustomer.apply {
                 cvAngkotC.visibility = View.VISIBLE
-                tvRecommendationNotFound.visibility = View.GONE
+                tvRecommendationNotFound.visibility =
+                    View.GONE
             }
-        } else {
-            getTrayekAngkotD(destination)
         }
     }
 
@@ -715,38 +617,6 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         jlGotongRoyong.latitude = -7.392545545002634
         jlGotongRoyong.longitude = 109.69011664584171
 
-//        val distanceOne = jlVeteran.distanceTo(jlLetnanKarjono) / 1000
-//        val distanceTwo = jlLetnanKarjono.distanceTo(jlStadion) / 1000
-//        val distanceThree = jlStadion.distanceTo(jlAjibarangSecang) / 1000
-//        val distanceFour = jlAjibarangSecang.distanceTo(jlCampurSalam) / 1000
-//        val distanceFive = jlCampurSalam.distanceTo(jlMtHaryono) / 1000
-//        val distanceSix = jlMtHaryono.distanceTo(jlMayjendSoetojo) / 1000
-//        val distanceSeven = jlMayjendSoetojo.distanceTo(jlSunanGripit) / 1000
-//        val distanceEight = jlSunanGripit.distanceTo(jlRejasa) / 1000
-//        val distanceNine = jlRejasa.distanceTo(jlMadukara) / 1000
-//        val distanceTen = jlMadukara.distanceTo(jlSingamerta) / 1000
-//        val distanceEleven = jlSingamerta.distanceTo(jlLetjendSuprapto) / 1000
-//        val distanceTwelve = jlLetjendSuprapto.distanceTo(jlAlMunawwaroh) / 1000
-//        val distanceThirteen = jlAlMunawwaroh.distanceTo(jlGotongRoyong) / 1000
-//        val distanceFourteen = jlGotongRoyong.distanceTo(jlMayjendSoetojo) / 1000
-//        val distanceFifteen = jlMayjendSoetojo.distanceTo(jlVeteran) / 1000
-//
-//        Log.d("CEK", distanceOne.toString())
-//        Log.d("CEK", distanceTwo.toString())
-//        Log.d("CEK", distanceThree.toString())
-//        Log.d("CEK", distanceFour.toString())
-//        Log.d("CEK", distanceFive.toString())
-//        Log.d("CEK", distanceSix.toString())
-//        Log.d("CEK", distanceSeven.toString())
-//        Log.d("CEK", distanceEight.toString())
-//        Log.d("CEK", distanceNine.toString())
-//        Log.d("CEK", distanceTen.toString())
-//        Log.d("CEK", distanceEleven.toString())
-//        Log.d("CEK", distanceTwelve.toString())
-//        Log.d("CEK", distanceThirteen.toString())
-//        Log.d("CEK", distanceFourteen.toString())
-//        Log.d("CEK", distanceFifteen.toString())
-
         val distanceToJlVeteran = destinationCustomer.distanceTo(jlVeteran) / 1000
         val distanceToJlLetnanKarjono = destinationCustomer.distanceTo(jlLetnanKarjono) / 1000
         val distanceToJlStadion = destinationCustomer.distanceTo(jlStadion) / 1000
@@ -794,14 +664,11 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                 0.1729356F
             )
         ) {
-            requestTrayek = trayekD
+            requestTrayekD = trayekD
             binding.customBackgroundLayoutCustomer.apply {
                 cvAngkotD.visibility = View.VISIBLE
-                tvRecommendationNotFound.visibility = View.GONE
-            }
-        } else {
-            binding.customBackgroundLayoutCustomer.apply {
-                tvRecommendationNotFound.visibility = View.VISIBLE
+                tvRecommendationNotFound.visibility =
+                    View.GONE
             }
         }
     }
@@ -947,132 +814,201 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
 
     // get closest driver in customer location
     private fun getClosestDriver() {
-        val driverLocation = firebaseDatabase.reference.child("DriversAvailable")
+        if (requestTrayekA != null || requestTrayekB != null || requestTrayekC != null || requestTrayekD != null) {
+            val driverLocation = firebaseDatabase.reference.child("DriversAvailable")
 
-        val geoFire = GeoFire(driverLocation)
-        if (pickUpLocation != null) {
-            geoQuery = geoFire.queryAtLocation(
-                GeoLocation(
-                    pickUpLocation!!.latitude,
-                    pickUpLocation!!.longitude
-                ), radius
-            )
-            geoQuery?.removeAllListeners()
+            driverLocation.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val geoFire = GeoFire(driverLocation)
+                        if (pickUpLocation != null) {
+                            geoQuery = geoFire.queryAtLocation(
+                                GeoLocation(
+                                    pickUpLocation!!.latitude,
+                                    pickUpLocation!!.longitude
+                                ), radius
+                            )
+                            geoQuery?.removeAllListeners()
 
-            geoQuery?.addGeoQueryEventListener(object : GeoQueryEventListener {
-                override fun onKeyEntered(key: String?, location: GeoLocation?) {
-                    if (!driverFound && isRequestAngkot && key != null) {
-                        // check request customer
-                        val gti = object : GenericTypeIndicator<Map<String?, Any?>?>() {}
-                        val mDriverDatabase =
-                            firebaseDatabase.reference.child("Users").child("Drivers").child(key)
-                        mDriverDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                if (snapshot.exists() && snapshot.childrenCount > 0 && requestTrayek != null) {
+                            geoQuery?.addGeoQueryEventListener(object : GeoQueryEventListener {
+                                override fun onKeyEntered(key: String?, location: GeoLocation?) {
+                                    if (!driverFound && isRequestAngkot && key != null) {
+                                        // check request customer
+                                        val gti =
+                                            object : GenericTypeIndicator<Map<String?, Any?>?>() {}
+                                        val mDriverDatabase =
+                                            firebaseDatabase.reference.child("Users")
+                                                .child("Drivers")
+                                                .child(key)
+                                        mDriverDatabase.addListenerForSingleValueEvent(object :
+                                            ValueEventListener {
+                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                if (snapshot.exists()) {
 
-                                    val driverMap: Map<String?, Any?>? = snapshot.getValue(gti)
+                                                    val driverMap: Map<String?, Any?>? =
+                                                        snapshot.getValue(gti)
 
-                                    if (driverFound) {
-                                        return
-                                    }
+                                                    if (driverFound) {
+                                                        return
+                                                    }
 
-                                    if (driverMap?.get("trayek") == requestTrayek) {
-                                        driverFound = true
-                                        driverFoundId = snapshot.key
-                                        if (driverFoundId != null) {
-                                            val driverRef =
-                                                firebaseDatabase.reference.child("Users")
-                                                    .child("Drivers")
-                                                    .child(driverFoundId.toString())
-                                                    .child("customerRequest")
+                                                    if (driverMap?.get("trayek") == requestTrayekA || driverMap?.get(
+                                                            "trayek"
+                                                        ) == requestTrayekB || driverMap?.get("trayek") == requestTrayekC || driverMap?.get(
+                                                            "trayek"
+                                                        ) == requestTrayekD
+                                                    ) {
+                                                        driverFound = true
+                                                        driverFoundId = snapshot.key
+                                                        if (driverFoundId != null) {
+                                                            val driverRef =
+                                                                firebaseDatabase.reference.child("Users")
+                                                                    .child("Drivers")
+                                                                    .child(driverFoundId.toString())
+                                                                    .child("customerRequest")
 
-                                            val customerId = firebaseAuth.currentUser?.uid
-                                            val message =
-                                                binding.customBackgroundLayoutCustomer.edtMessage.text.toString()
+                                                            val customerId =
+                                                                firebaseAuth.currentUser?.uid
+                                                            val message =
+                                                                binding.customBackgroundLayoutCustomer.edtMessage.text.toString()
 
-                                            val map = HashMap<String, Any>()
-                                            // put customer ride id inside customer request
-                                            if (customerId != null) {
-                                                map["customerRideId"] = customerId
+                                                            val map = HashMap<String, Any>()
+                                                            // put customer ride id inside customer request
+                                                            if (customerId != null) {
+                                                                map["customerRideId"] = customerId
+                                                            }
+
+                                                            // put destination inside customer request
+                                                            if (destination != null) {
+                                                                map["destination"] =
+                                                                    destination.toString()
+                                                            } else {
+                                                                map["destination"] =
+                                                                    resources.getString(R.string.no_destination)
+                                                            }
+
+                                                            // put address inside customer request
+                                                            if (address != null) {
+                                                                map["address"] = address.toString()
+                                                            } else {
+                                                                map["address"] =
+                                                                    resources.getString(R.string.no_address)
+                                                            }
+
+                                                            // put destination latitude inside customer request
+                                                            if (destinationLatLng != null) {
+                                                                map["destinationLat"] =
+                                                                    destinationLatLng!!.latitude
+                                                            } else {
+                                                                map["destinationLat"] = 0.0
+                                                            }
+
+                                                            // put destination longitude inside customer request
+                                                            if (destinationLatLng != null) {
+                                                                map["destinationLng"] =
+                                                                    destinationLatLng!!.longitude
+                                                            } else {
+                                                                map["destinationLng"] = 0.0
+                                                            }
+
+                                                            // put message inside customer request
+                                                            if (message.isNotEmpty() && message != "") {
+                                                                map["message"] = message
+                                                            } else {
+                                                                map["message"] =
+                                                                    resources.getString(R.string.no_message)
+                                                            }
+
+                                                            map["isPicked"] = false
+
+                                                            driverRef.updateChildren(map)
+
+                                                            // call the function get driver location
+                                                            getDriverLocation()
+
+                                                            // call the function to get driver information
+                                                            getDriverInformation()
+
+                                                            // call the function to ended ride
+                                                            getHasRideEnded()
+
+                                                            binding.customBackgroundLayoutCustomer.btnRequestAngkot.text =
+                                                                resources.getString(R.string.looking_for_angkot_location)
+                                                        }
+                                                    } else {
+                                                        Handler(mainLooper).postDelayed({
+                                                            driverNotFound()
+                                                        }, 2000L)
+                                                    }
+                                                }
                                             }
 
-                                            // put destination inside customer request
-                                            if (destination != null) {
-                                                map["destination"] = destination.toString()
-                                            } else {
-                                                map["destination"] =
-                                                    resources.getString(R.string.no_destination)
-                                            }
-
-                                            // put address inside customer request
-                                            if (address != null) {
-                                                map["address"] = address.toString()
-                                            } else {
-                                                map["address"] =
-                                                    resources.getString(R.string.no_address)
-                                            }
-
-                                            // put destination latitude inside customer request
-                                            if (destinationLatLng != null) {
-                                                map["destinationLat"] = destinationLatLng!!.latitude
-                                            } else {
-                                                map["destinationLat"] = 0.0
-                                            }
-
-                                            // put destination longitude inside customer request
-                                            if (destinationLatLng != null) {
-                                                map["destinationLng"] =
-                                                    destinationLatLng!!.longitude
-                                            } else {
-                                                map["destinationLng"] = 0.0
-                                            }
-
-                                            // put message inside customer request
-                                            if (message.isNotEmpty() && message != "") {
-                                                map["message"] = message
-                                            } else {
-                                                map["message"] =
-                                                    resources.getString(R.string.no_message)
-                                            }
-
-                                            map["isPicked"] = false
-
-                                            driverRef.updateChildren(map)
-
-                                            // call the function get driver location
-                                            getDriverLocation()
-
-                                            // call the function to get driver information
-                                            getDriverInformation()
-
-                                            // call the function to ended ride
-                                            getHasRideEnded()
-
-                                            binding.customBackgroundLayoutCustomer.btnRequestAngkot.text =
-                                                resources.getString(R.string.looking_for_angkot_location)
-                                        }
+                                            override fun onCancelled(error: DatabaseError) {}
+                                        })
                                     }
                                 }
-                            }
 
-                            override fun onCancelled(error: DatabaseError) {}
-                        })
+                                override fun onKeyExited(key: String?) {}
+
+                                override fun onKeyMoved(key: String?, location: GeoLocation?) {}
+
+                                override fun onGeoQueryReady() {
+                                    if (!driverFound) {
+                                        radius++
+                                        getClosestDriver()
+                                    }
+                                }
+
+                                override fun onGeoQueryError(error: DatabaseError?) {}
+                            })
+                        }
+                    } else {
+                        Handler(mainLooper).postDelayed({
+                            driverNotFound()
+                        }, 2000L)
                     }
                 }
 
-                override fun onKeyExited(key: String?) {}
-
-                override fun onKeyMoved(key: String?, location: GeoLocation?) {}
-
-                override fun onGeoQueryReady() {
-                    if (!driverFound) {
-                        radius++
-                        getClosestDriver()
-                    }
-                }
-
-                override fun onGeoQueryError(error: DatabaseError?) {}
+                override fun onCancelled(error: DatabaseError) {}
             })
+        } else {
+            Handler(mainLooper).postDelayed({
+                driverNotFound()
+            }, 2000L)
+        }
+    }
+
+    // function if driver not found
+    private fun driverNotFound() {
+        isRequestAngkot = false
+        Toast.makeText(
+            this@CustomerActivity,
+            resources.getString(R.string.driver_not_found),
+            Toast.LENGTH_SHORT
+        )
+            .show()
+        // remove customer request
+        val customerId = firebaseAuth.currentUser?.uid
+        val ref = firebaseDatabase.getReference("CustomersRequest")
+        val geofire = GeoFire(ref)
+        geofire.removeLocation(customerId)
+
+        // remove pickup marker
+        pickUpMarker?.remove()
+
+        requestTrayekA = null
+        requestTrayekB = null
+        requestTrayekC = null
+        requestTrayekD = null
+
+        binding.customBackgroundLayoutCustomer.apply {
+            btnRequestAngkot.isEnabled = true
+            btnRequestAngkot.text = resources.getString(R.string.search_angkot)
+            cvAngkotA.visibility = View.GONE
+            cvAngkotB.visibility = View.GONE
+            cvAngkotC.visibility = View.GONE
+            cvAngkotD.visibility = View.GONE
+            tvRecommendationNotFound.visibility = View.VISIBLE
         }
     }
 
@@ -1134,9 +1070,14 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                                                     snapshot.getValue(gti)
 
                                                 if (mapReq?.get("isPicked") == true) {
-                                                    binding.customBackgroundLayoutCustomer.btnRequestAngkot.apply {
-                                                        isEnabled = false
-                                                        text =
+                                                    binding.customBackgroundLayoutCustomer.apply {
+                                                        tvRecommendation.visibility = View.GONE
+                                                        cvAngkotA.visibility = View.GONE
+                                                        cvAngkotB.visibility = View.GONE
+                                                        cvAngkotC.visibility = View.GONE
+                                                        cvAngkotD.visibility = View.GONE
+                                                        btnRequestAngkot.isEnabled = false
+                                                        btnRequestAngkot.text =
                                                             resources.getString(R.string.angkot_to_your_location)
                                                     }
                                                 }
@@ -1318,6 +1259,11 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
     }
 
     private fun endRide() {
+        requestTrayekA = null
+        requestTrayekB = null
+        requestTrayekC = null
+        requestTrayekD = null
+
         isRequestAngkot = false
         // cancelling request angkot
         geoQuery?.removeAllListeners()
@@ -1361,7 +1307,13 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
             layoutName.visibility = View.GONE
             layoutPhone.visibility = View.GONE
             layoutVehiclePlate.visibility = View.GONE
+            cvAngkotA.visibility = View.GONE
+            cvAngkotB.visibility = View.GONE
+            cvAngkotC.visibility = View.GONE
+            cvAngkotD.visibility = View.GONE
             tvNoOrders.visibility = View.VISIBLE
+            tvRecommendation.visibility = View.VISIBLE
+            tvRecommendationNotFound.visibility = View.VISIBLE
         }
     }
 

@@ -119,4 +119,6 @@
 
     <string name="messageMail">Halo %1$s,\nSemoga tetap semangat dan sehat selalu ya!\nKami dari pihak Dinas Perhubungan Kabupaten Banjarnegara menginformasikan bahwa untuk keperluan verifikasi akun driver Bapak/Ibu diharapkan datang ke kantor kami yang ada berada di Jl. Serulingmas No.1, Semampir, Kec. Banjarnegara, Kab. Banjarnegara, Jawa Tengah 53418. Berikut berkas yang perlu Bapak/Ibu bawa :\n1. BPKB Angkutan Pedesaan\n2. STNK Angkutan Pedesaan\n3. SIM A Umum\nKami tunggu kehadiran Bapak/Ibu untuk bergabung dengan Kotline! :)</string>
     <string name="subjectMail">Verifikasi Akun Driver</string>
+
+    <string name="driver_not_found">Driver tidak ditemukan.</string>
 </resources>
