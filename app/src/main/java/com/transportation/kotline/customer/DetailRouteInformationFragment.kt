@@ -45,10 +45,12 @@ class DetailRouteInformationFragment : Fragment() {
     }
 
     private fun getDataTrayek(trayekType: String) {
+        binding.progressBar.visibility = View.VISIBLE
         val trayekRef = firebaseDatabase.reference.child("Trayek").child(trayekType)
         trayekRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
+                    binding.progressBar.visibility = View.GONE
                     val trayek = snapshot.ref.key
                     val ngetemLocation = snapshot.child("ngetemLocation").value.toString()
                     val fares = snapshot.child("fares").value.toString()
@@ -60,6 +62,8 @@ class DetailRouteInformationFragment : Fragment() {
                         tvTarif.text = StringBuilder().append("Rp. ").append(fares)
                         tvDescription.text = description
                     }
+                } else {
+                    binding.progressBar.visibility = View.GONE
                 }
             }
 
