@@ -24,6 +24,8 @@ android {
 
         buildConfigField "String", "EMAIL", localProperties['email']
         buildConfigField "String", "PASSWORD", localProperties["password"]
+        buildConfigField "String", "TEMPORARY_API_KEY", localProperties['temporaryApiKey']
+        resValue "string", "API_KEY", localProperties["apiKey"]
     }
 
     buildTypes {
@@ -43,10 +45,12 @@ android {
     viewBinding {
         enabled = true
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -93,10 +97,8 @@ dependencies {
     // lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
-    implementation files('libs/activation.jar')
-    implementation files('libs/additionnal.jar')
-    implementation files('libs/mail.jar')
 
-    // send email library
-//    implementation 'com.github.1902shubh:SendMail:1.0.0'
+    // java mail
+    implementation 'com.github.1902shubh:SendMail:1.0.0'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.3'
 }

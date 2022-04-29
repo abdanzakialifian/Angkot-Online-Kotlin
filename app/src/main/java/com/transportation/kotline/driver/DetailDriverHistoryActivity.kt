@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.transportation.kotline.BuildConfig
 import com.transportation.kotline.R
 import com.transportation.kotline.databinding.ActivityDetailDriverHistoryBinding
 import com.transportation.kotline.driver.DriversHistoryActivity.Companion.DRIVER_DATA_HISTORY
@@ -139,7 +140,7 @@ class DetailDriverHistoryActivity : AppCompatActivity(), OnMapReadyCallback, Rou
     // function to get route marker API KEY
     private fun getRouteToMarker(locationLatLng: LatLng, destinationLatLng: LatLng) {
         val routing = Routing.Builder()
-            .key("AIzaSyDTJ2xuEs3k5e5yADs93VwiqcapyO5AT6M")
+            .key(BuildConfig.TEMPORARY_API_KEY)
             .travelMode(AbstractRouting.TravelMode.DRIVING)
             .withListener(this)
             .alternativeRoutes(false)

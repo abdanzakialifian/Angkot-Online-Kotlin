@@ -52,7 +52,7 @@
     <string name="close">Close</string>
     <string name="customersHistory">History</string>
     <string name="profile">Profile</string>
-    <string name="route_information">Route Information</string>
+    <string name="trayek_information">Trayek Information</string>
     <string name="are_you_sure">Apakah anda yakin ingin keluar?</string>
     <string name="my_profile">My Profile</string>
     <string name="name">Nama</string>
@@ -62,6 +62,7 @@
     <string name="female">Wanita</string>
     <string name="save">Save</string>
     <string name="saving_success">Berhasil menyimpan data!</string>
+    <string name="saving_failed">Gagal menyimpan data!</string>
     <string name="gender_title">Jenis Kelamin</string>
     <string name="phone_number_title">Nomor Telepon :</string>
     <string name="message_title">Pesan :</string>
@@ -97,7 +98,8 @@
     <string name="data_driver">Data Supir :</string>
     <string name="data_customer">Data penumpang :</string>
     <string name="recommendation_not_found">Tidak tersedia.</string>
-    <string name="angkot_recommendation">Rekomendasi angkot :</string>
+    <string name="angkot_current_recommendation">Rekomendasi angkot saat ini :</string>
+    <string name="angkot_next_recommendation">Rekomendasi angkot selanjutnya :</string>
     <string name="driver_rating">Rating supir :</string>
     <string name="your_rating">Rating kamu :</string>
     <string name="working">Working</string>
@@ -121,4 +123,11 @@
     <string name="subjectMail">Verifikasi Akun Driver</string>
 
     <string name="driver_not_found">Driver tidak ditemukan.</string>
+    <string name="transit_location">Lokasi Transit :</string>
+
+    <string name="empty_route">Trayek kosong.</string>
+    <string name="empty_location">Lokasi kosong.</string>
+    <string name="empty_fares">Tarif kosong.</string>
+    <string name="empty_description">Deskripsi kosong.</string>
+    <string name="title_activity_detail_route_information">DetailRouteInformationActivity</string>
 </resources>

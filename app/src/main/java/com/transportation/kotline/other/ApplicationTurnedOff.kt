@@ -31,7 +31,7 @@ class ApplicationTurnedOff : Service() {
         val customerPositionRef = FirebaseDatabase.getInstance().getReference("CustomersPosition")
         val geoFirePosition = GeoFire(customerPositionRef)
         if (customerId != null) {
-            geoFirePosition.removeLocation(driverId)
+            geoFirePosition.removeLocation(customerId)
         }
     }
 }

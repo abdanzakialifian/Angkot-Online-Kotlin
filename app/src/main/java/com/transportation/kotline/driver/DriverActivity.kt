@@ -34,11 +34,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.transportation.kotline.BuildConfig
 import com.transportation.kotline.R
 import com.transportation.kotline.databinding.ActivityDriverBinding
 import com.transportation.kotline.databinding.NavHeaderBinding
 import com.transportation.kotline.other.ApplicationTurnedOff
+import com.transportation.kotline.other.LogOutTimerTask
 import com.transportation.kotline.other.OptionActivity
+import java.util.*
+
 
 @Suppress("DEPRECATION")
 class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
@@ -70,6 +74,7 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
     private var customerDestination: String? = null
     private var destinationAddress: String? = null
     private var pickUpLatLng: LatLng? = null
+    private var timer: Timer? = null
     private var customerId: String = ""
     private var trayek: String = ""
     private var isZoomUpdate = false
@@ -378,11 +383,6 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
 
                         pickUpLatLng = LatLng(locationLat, locationLng)
                         if (pickUpLatLng != null) {
-                            pickUpMarker = mMap.addMarker(
-                                MarkerOptions().position(pickUpLatLng as LatLng)
-                                    .title("Pickup Location")
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_user))
-                            )
 
                             // call function to get route to customer
                             getRouteToMarker(pickUpLatLng)
@@ -543,7 +543,6 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
                         binding.customBackgroundLayoutDriver.apply {
                             layoutDestination.visibility = View.VISIBLE
                             layoutAddress.visibility = View.VISIBLE
-                            layoutMessage.visibility = View.VISIBLE
                             btnRideStatus.visibility = View.VISIBLE
 
                             if (map?.get("destination") != null) {
@@ -561,13 +560,6 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
                             } else {
                                 destinationAddress = null
                                 tvAddressCustomer.text = resources.getString(R.string.no_address)
-                            }
-
-                            if (map?.get("message") != null && map["message"] != "") {
-                                val message = map["message"].toString()
-                                tvMessageCustomer.text = message
-                            } else {
-                                tvMessageCustomer.text = resources.getString(R.string.no_message)
                             }
                         }
                     }
@@ -599,7 +591,7 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
     private fun getRouteToMarker(pickUpLatLng: LatLng?) {
         if (pickUpLatLng != null && mLastLocation != null) {
             val routing = Routing.Builder()
-                .key("AIzaSyDTJ2xuEs3k5e5yADs93VwiqcapyO5AT6M")
+                .key(BuildConfig.TEMPORARY_API_KEY)
                 .travelMode(AbstractRouting.TravelMode.DRIVING)
                 .withListener(this)
                 .alternativeRoutes(false)
@@ -665,7 +657,6 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
             layoutPhone.visibility = View.GONE
             layoutDestination.visibility = View.GONE
             layoutAddress.visibility = View.GONE
-            layoutMessage.visibility = View.GONE
             btnRideStatus.visibility = View.GONE
             tvNoOrders.visibility = View.VISIBLE
         }
@@ -891,13 +882,7 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
         mMap.isMyLocationEnabled = true
     }
 
-    override fun onRoutingFailure(e: RouteException?) {
-        if (e != null) {
-            Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show()
-        }
-    }
+    override fun onRoutingFailure(e: RouteException?) {}
 
     override fun onRoutingStart() {}
 
@@ -922,11 +907,6 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
                 polyOptions.addAll(route[i].points)
                 val polyline: Polyline = mMap.addPolyline(polyOptions)
                 polyLines.add(polyline)
-                Toast.makeText(
-                    applicationContext,
-                    "Route " + (i + 1) + ": distance - " + route[i].distanceValue + ": duration - " + route[i].durationValue,
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
     }
@@ -1002,6 +982,23 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
                 .show()
         }
         backPressedTime = System.currentTimeMillis()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        timer = Timer()
+        val logoutTimeTaskAvailable = LogOutTimerTask(googleSignInClient, "DriversAvailable")
+        timer!!.scheduleAtFixedRate(logoutTimeTaskAvailable, 60000L, 5000L)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (timer != null) {
+            timer!!.cancel()
+            timer = null
+        }
     }
 
     companion object {

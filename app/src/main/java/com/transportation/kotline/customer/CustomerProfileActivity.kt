@@ -209,7 +209,11 @@ class CustomerProfileActivity : AppCompatActivity(), View.OnClickListener {
                     finish()
                 }
             } else {
-                finish()
+                Toast.makeText(
+                    this@CustomerProfileActivity,
+                    resources.getString(R.string.saving_failed),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             val customerInformation = HashMap<String, Any>()
@@ -220,7 +224,22 @@ class CustomerProfileActivity : AppCompatActivity(), View.OnClickListener {
 
             if (customerId != null) {
                 mCustomerDatabase.updateChildren(customerInformation)
-                finish()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(
+                                this@CustomerProfileActivity,
+                                resources.getString(R.string.saving_success),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            finish()
+                        } else {
+                            Toast.makeText(
+                                this@CustomerProfileActivity,
+                                resources.getString(R.string.saving_failed),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
             }
         }
     }
@@ -289,11 +308,6 @@ class CustomerProfileActivity : AppCompatActivity(), View.OnClickListener {
             // button save customer information
             R.id.btn_save -> {
                 saveCustomerInformation()
-                Toast.makeText(
-                    this,
-                    resources.getString(R.string.saving_success),
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
     }

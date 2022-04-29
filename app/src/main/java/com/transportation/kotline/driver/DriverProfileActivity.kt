@@ -244,7 +244,11 @@ class DriverProfileActivity : AppCompatActivity(), View.OnClickListener {
                     finish()
                 }
             } else {
-                finish()
+                Toast.makeText(
+                    this@DriverProfileActivity,
+                    resources.getString(R.string.saving_failed),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             val driverInformation = HashMap<String, Any>()
@@ -257,7 +261,22 @@ class DriverProfileActivity : AppCompatActivity(), View.OnClickListener {
             driverInformation["numberTransportation"] = numberTransportation
 
             if (driverId != null) {
-                mDriverDatabase.updateChildren(driverInformation)
+                mDriverDatabase.updateChildren(driverInformation).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            this@DriverProfileActivity,
+                            resources.getString(R.string.saving_success),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        finish()
+                    } else {
+                        Toast.makeText(
+                            this@DriverProfileActivity,
+                            resources.getString(R.string.saving_failed),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             }
         }
     }
@@ -326,11 +345,6 @@ class DriverProfileActivity : AppCompatActivity(), View.OnClickListener {
             // button save driver information
             R.id.btn_save -> {
                 saveDriverInformation()
-                Toast.makeText(
-                    this,
-                    resources.getString(R.string.saving_success),
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
     }

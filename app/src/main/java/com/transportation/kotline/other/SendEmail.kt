@@ -1,8 +1,11 @@
 package com.transportation.kotline.other
 
 import android.app.Application
+import com.transportation.kotline.BuildConfig
 import com.transportation.kotline.R
+import papaya.`in`.sendmail.SendMail
 import java.util.*
+
 
 class SendEmail(val app: Application, val email: String) {
     // greetings
@@ -21,7 +24,8 @@ class SendEmail(val app: Application, val email: String) {
 
     fun email() {
         // send email to user
-        val mail = JavaMailAPI(
+        val mail = SendMail(
+            BuildConfig.EMAIL, BuildConfig.PASSWORD,
             email,
             app.getString(R.string.subjectMail),
             app.getString(R.string.messageMail, greetings)

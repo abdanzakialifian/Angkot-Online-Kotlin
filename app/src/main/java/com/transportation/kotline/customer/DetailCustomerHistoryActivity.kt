@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.transportation.kotline.BuildConfig
 import com.transportation.kotline.R
 import com.transportation.kotline.customer.CustomersHistoryActivity.Companion.CUSTOMER_DATA_HISTORY
 import com.transportation.kotline.databinding.ActivityDetailCustomerHistoryBinding
@@ -157,7 +158,7 @@ class DetailCustomerHistoryActivity : AppCompatActivity(), OnMapReadyCallback, R
     // function to get route marker API KEY
     private fun getRouteToMarker(locationLatLng: LatLng, destinationLatLng: LatLng) {
         val routing = Routing.Builder()
-            .key("AIzaSyDTJ2xuEs3k5e5yADs93VwiqcapyO5AT6M")
+            .key(BuildConfig.TEMPORARY_API_KEY)
             .travelMode(AbstractRouting.TravelMode.DRIVING)
             .withListener(this)
             .alternativeRoutes(false)
@@ -215,7 +216,6 @@ class DetailCustomerHistoryActivity : AppCompatActivity(), OnMapReadyCallback, R
         }
 
         polyLines = ArrayList()
-        //add route(s) to the map.
         //add route(s) to the map.
         if (route != null) {
             for (i in 0 until route.size) {

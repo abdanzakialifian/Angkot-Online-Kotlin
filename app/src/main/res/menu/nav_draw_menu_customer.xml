@@ -11,9 +11,9 @@
         android:title="@string/customersHistory" />
 
     <item
-        android:id="@+id/route"
+        android:id="@+id/trayek"
         android:icon="@drawable/ic_route_32"
-        android:title="@string/route_information" />
+        android:title="@string/trayek_information" />
 
     <item
         android:id="@+id/logout"
