@@ -1,4 +1,4 @@
-package com.transportation.kotline.customer
+package com.transportation.kotline.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

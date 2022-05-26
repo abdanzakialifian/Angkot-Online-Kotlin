@@ -16,6 +16,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.transportation.kotline.R
 import com.transportation.kotline.databinding.ActivityCustomerLoginBinding
+import com.transportation.kotline.model.Customer
 import com.transportation.kotline.other.LoginEmailActivity
 import com.transportation.kotline.other.RegisterEmailActivity
 

@@ -130,6 +130,7 @@
             android:layout_below="@id/tv_no_orders"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
+            tools:visibility="visible"
             android:text="@string/angkot_current_recommendation"
             android:fontFamily="@font/poppins_medium"
             android:visibility="gone"
@@ -278,6 +279,7 @@
             <TextView
                 android:id="@+id/tv_transit_location"
                 android:layout_width="wrap_content"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/recommendation_not_found"

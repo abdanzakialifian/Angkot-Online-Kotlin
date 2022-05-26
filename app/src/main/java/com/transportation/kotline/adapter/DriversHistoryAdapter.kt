@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.transportation.kotline.databinding.ItemListDriversHistoryBinding
-import com.transportation.kotline.driver.DriversHistory
+import com.transportation.kotline.model.DriversHistory
 import com.transportation.kotline.driver.IOnItemDriverCallback
 import java.util.*
 import kotlin.collections.ArrayList

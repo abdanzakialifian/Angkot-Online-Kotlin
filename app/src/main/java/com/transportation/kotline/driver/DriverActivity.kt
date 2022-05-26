@@ -34,12 +34,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.transportation.kotline.BuildConfig
 import com.transportation.kotline.R
 import com.transportation.kotline.databinding.ActivityDriverBinding
 import com.transportation.kotline.databinding.NavHeaderBinding
 import com.transportation.kotline.other.ApplicationTurnedOff
-import com.transportation.kotline.other.LogOutTimerTask
 import com.transportation.kotline.other.OptionActivity
 import java.util.*
 
@@ -797,6 +797,20 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
         builder.setPositiveButton("Ya") { _, _ ->
             googleSignInClient.revokeAccess()
                 .addOnCompleteListener {
+//                    FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener {
+//                        if (it.isSuccessful) {
+//                            val driverId = FirebaseAuth.getInstance().currentUser?.uid
+//                            val driverDatabase =
+//                                firebaseDatabase.reference.child("Users").child("Drivers")
+//                                    .child(driverId.toString())
+//
+//                            val driverInformation = HashMap<String, Any>()
+//                            driverInformation["deviceToken"] = ""
+//                            driverDatabase.updateChildren(driverInformation)
+//
+//
+//                        }
+//                    }
                     disconnectDriver()
                     Intent(this, OptionActivity::class.java).apply {
                         startActivity(this)
@@ -984,26 +998,26 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
         backPressedTime = System.currentTimeMillis()
     }
 
-    override fun onPause() {
-        super.onPause()
-
-        timer = Timer()
-        val logoutTimeTaskAvailable = LogOutTimerTask(googleSignInClient, "DriversAvailable")
-        timer!!.scheduleAtFixedRate(logoutTimeTaskAvailable, 60000L, 5000L)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        if (timer != null) {
-            timer!!.cancel()
-            timer = null
-        }
-    }
+//    override fun onPause() {
+//        super.onPause()
+//
+//        timer = Timer()
+//        val logoutTimeTaskAvailable = LogOutTimerTask(googleSignInClient, "DriversAvailable")
+//        timer!!.scheduleAtFixedRate(logoutTimeTaskAvailable, 60000L, 5000L)
+//    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//
+//        if (timer != null) {
+//            timer!!.cancel()
+//            timer = null
+//        }
+//    }
 
     companion object {
         private const val LOCATION_REQUEST_CODE = 1
         private val COLORS = intArrayOf(R.color.light_blue)
-        private const val RADIUS = 10000.0
+        private const val RADIUS = 1.0
     }
 }

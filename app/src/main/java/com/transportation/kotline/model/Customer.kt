@@ -1,4 +1,4 @@
-package com.transportation.kotline.customer
+package com.transportation.kotline.model
 
 data class Customer(
     var name: String = "",

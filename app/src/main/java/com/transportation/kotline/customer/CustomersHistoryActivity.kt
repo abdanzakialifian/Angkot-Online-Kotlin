@@ -14,6 +14,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.transportation.kotline.adapter.CustomersHistoryAdapter
 import com.transportation.kotline.databinding.ActivityCustomersHistoryBinding
+import com.transportation.kotline.model.CustomersHistory
 import java.util.*
 
 class CustomersHistoryActivity : AppCompatActivity(), IOnItemCustomerCallback {

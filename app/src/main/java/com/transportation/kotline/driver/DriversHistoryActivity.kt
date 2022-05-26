@@ -14,6 +14,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.transportation.kotline.adapter.DriversHistoryAdapter
 import com.transportation.kotline.databinding.ActivityDriversHistoryBinding
+import com.transportation.kotline.model.DriversHistory
 
 class DriversHistoryActivity : AppCompatActivity(), IOnItemDriverCallback {
 

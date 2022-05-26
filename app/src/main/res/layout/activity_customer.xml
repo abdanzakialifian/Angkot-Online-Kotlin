@@ -50,15 +50,6 @@
 
         </androidx.cardview.widget.CardView>
 
-<!--        dummy-->
-        <Button
-            android:id="@+id/btn_trayek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/cv_search_view"
-            android:layout_centerHorizontal="true"
-            android:text="Trayek" />
-
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

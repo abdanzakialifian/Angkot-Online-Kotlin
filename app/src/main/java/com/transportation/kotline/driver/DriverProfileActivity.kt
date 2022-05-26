@@ -243,12 +243,6 @@ class DriverProfileActivity : AppCompatActivity(), View.OnClickListener {
                 uploadTask.addOnFailureListener {
                     finish()
                 }
-            } else {
-                Toast.makeText(
-                    this@DriverProfileActivity,
-                    resources.getString(R.string.saving_failed),
-                    Toast.LENGTH_SHORT
-                ).show()
             }
 
             val driverInformation = HashMap<String, Any>()

@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.transportation.kotline.R
 import com.transportation.kotline.customer.CustomerActivity
 import com.transportation.kotline.customer.CustomerLoginActivity.Companion.CUSTOMER
@@ -161,6 +162,20 @@ class LoginEmailActivity : AppCompatActivity(), View.OnClickListener {
                     // check verification
                     if (map?.get("verification") == true) {
                         Intent(this@LoginEmailActivity, DriverActivity::class.java).apply {
+                            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    val token = task.result
+                                    FirebaseService.sharedPreferences =
+                                        getSharedPreferences(
+                                            "sharedPreferences",
+                                            Context.MODE_PRIVATE
+                                        )
+                                    FirebaseService.token = token
+                                    val driverInformation = HashMap<String, Any>()
+                                    driverInformation["deviceToken"] = task.result
+                                    driverDatabase.updateChildren(driverInformation)
+                                }
+                            }
                             startActivity(this)
                             finishAffinity()
                         }

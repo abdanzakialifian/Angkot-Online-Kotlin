@@ -23,6 +23,7 @@ import com.transportation.kotline.BuildConfig
 import com.transportation.kotline.R
 import com.transportation.kotline.databinding.ActivityDetailDriverHistoryBinding
 import com.transportation.kotline.driver.DriversHistoryActivity.Companion.DRIVER_DATA_HISTORY
+import com.transportation.kotline.model.DriversHistory
 import java.util.*
 
 @Suppress("DEPRECATION")

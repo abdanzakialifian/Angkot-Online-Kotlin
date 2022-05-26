@@ -16,13 +16,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.transportation.kotline.R
-import com.transportation.kotline.customer.Customer
 import com.transportation.kotline.customer.CustomerLoginActivity.Companion.CUSTOMER
 import com.transportation.kotline.databinding.ActivityRegisterEmailBinding
-import com.transportation.kotline.driver.Driver
 import com.transportation.kotline.driver.DriverLoginActivity
 import com.transportation.kotline.driver.DriverLoginActivity.Companion.DRIVER
+import com.transportation.kotline.model.Customer
+import com.transportation.kotline.model.Driver
 
 class RegisterEmailActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -180,11 +181,21 @@ class RegisterEmailActivity : AppCompatActivity(), View.OnClickListener {
                                 // call function alert dialog
                                 alertDialog(customer)
                             } else if (driver != null && userId != null) {
-                                val driverData = Driver(fullName, email, false)
-                                val driversDb = firebaseDatabase.reference.child("Users")
-                                    .child(driver.toString()).child(userId)
-                                // add data driver to child id drivers
-                                driversDb.setValue(driverData)
+                                FirebaseMessaging.getInstance().token.addOnCompleteListener { tasks ->
+                                    if (tasks.isSuccessful) {
+                                        val token = tasks.result
+                                        FirebaseService.sharedPreferences = getSharedPreferences(
+                                            "sharedPreferences",
+                                            Context.MODE_PRIVATE
+                                        )
+                                        FirebaseService.token = token
+                                        val driverData = Driver(fullName, email, false, token)
+                                        val driversDb = firebaseDatabase.reference.child("Users")
+                                            .child("Drivers").child(userId)
+                                        // add data driver to child id drivers
+                                        driversDb.setValue(driverData)
+                                    }
+                                }
 
                                 // send email to driver
                                 val sendEmail = SendEmail(application, email)

@@ -23,6 +23,7 @@ import com.transportation.kotline.BuildConfig
 import com.transportation.kotline.R
 import com.transportation.kotline.customer.CustomersHistoryActivity.Companion.CUSTOMER_DATA_HISTORY
 import com.transportation.kotline.databinding.ActivityDetailCustomerHistoryBinding
+import com.transportation.kotline.model.CustomersHistory
 import java.util.*
 
 @Suppress("DEPRECATION")

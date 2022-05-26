@@ -1,4 +1,4 @@
-package com.transportation.kotline.driver
+package com.transportation.kotline.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

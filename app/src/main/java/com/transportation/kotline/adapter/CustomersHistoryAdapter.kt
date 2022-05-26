@@ -4,7 +4,7 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.transportation.kotline.customer.CustomersHistory
+import com.transportation.kotline.model.CustomersHistory
 import com.transportation.kotline.customer.IOnItemCustomerCallback
 import com.transportation.kotline.databinding.ItemListCustomersHistoryBinding
 import java.util.*

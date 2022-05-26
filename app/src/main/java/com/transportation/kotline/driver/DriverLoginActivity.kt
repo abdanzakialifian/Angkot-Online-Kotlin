@@ -1,5 +1,6 @@
 package com.transportation.kotline.driver
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -17,8 +18,11 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.transportation.kotline.R
 import com.transportation.kotline.databinding.ActivityDriverLoginBinding
+import com.transportation.kotline.model.Driver
+import com.transportation.kotline.other.FirebaseService
 import com.transportation.kotline.other.LoginEmailActivity
 import com.transportation.kotline.other.RegisterEmailActivity
 import com.transportation.kotline.other.SendEmail
@@ -85,11 +89,19 @@ class DriverLoginActivity : AppCompatActivity(), View.OnClickListener {
                     checkDriverVerification()
                 } else {
                     if (driverId != null && fullName != null && email != null) {
-                        val driverData = Driver(fullName, email, false)
-                        val driversDb = firebaseDatabase.reference.child("Users")
-                            .child("Drivers").child(driverId)
-                        // add data driver to child id drivers
-                        driversDb.setValue(driverData)
+                        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val token = task.result
+                                FirebaseService.sharedPreferences =
+                                    getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
+                                FirebaseService.token = token
+                                val driverData = Driver(fullName, email, false, token)
+                                val driversDb = firebaseDatabase.reference.child("Users")
+                                    .child("Drivers").child(driverId)
+                                // add data driver to child id drivers
+                                driversDb.setValue(driverData)
+                            }
+                        }
 
                         // send email to driver
                         val sendEmail = SendEmail(application, email)
@@ -117,10 +129,22 @@ class DriverLoginActivity : AppCompatActivity(), View.OnClickListener {
                     val map: Map<String?, Any?>? = snapshot.getValue(gti)
                     // check verification
                     if (map?.get("verification") == true) {
+//                        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+//                            if (task.isSuccessful) {
+//                                val token = task.result
+//                                FirebaseService.sharedPreferences =
+//                                    getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
+//                                FirebaseService.token = token
+//                                val driverInformation = HashMap<String, Any>()
+//                                driverInformation["deviceToken"] = task.result
+//                                driverDatabase.updateChildren(driverInformation)
+
                         Intent(this@DriverLoginActivity, DriverActivity::class.java).apply {
                             startActivity(this)
                             finishAffinity()
                         }
+//                            }
+//                        }
                     } else {
                         Toast.makeText(
                             this@DriverLoginActivity,
