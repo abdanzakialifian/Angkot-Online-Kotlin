@@ -269,10 +269,18 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
             binding.customBackgroundLayoutCustomer.apply {
                 if (isDestinationTrayekA) {
                     tvCurrentRecommendation.visibility = View.VISIBLE
-                    cvCurrentAngkotA.visibility = View.VISIBLE
-                    cvNextAngkotA.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
-                    tvNextRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.VISIBLE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.GONE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
+                    tvNextRecommendationNotFound.visibility = View.VISIBLE
                 }
 
                 if (isDestinationTrayekB) {
@@ -283,11 +291,17 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     isTransitInKantorPos = true
 
                     tvCurrentRecommendation.visibility = View.VISIBLE
-                    cvCurrentAngkotA.visibility = View.VISIBLE
-                    tvNextRecommendation.visibility = View.VISIBLE
-                    cvNextAngkotB.visibility = View.VISIBLE
-                    cvNextAngkotD.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.VISIBLE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.VISIBLE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.VISIBLE
+                    tvNextRecommendation.visibility = View.VISIBLE
                     tvNextRecommendationNotFound.visibility = View.GONE
                 }
                 if (isDestinationTrayekC) {
@@ -296,10 +310,17 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     isTransitInPasarWage = true
 
                     tvCurrentRecommendation.visibility = View.VISIBLE
-                    cvCurrentAngkotA.visibility = View.VISIBLE
-                    tvNextRecommendation.visibility = View.VISIBLE
-                    cvNextAngkotC.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.VISIBLE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.VISIBLE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
                     tvNextRecommendationNotFound.visibility = View.GONE
                 }
 
@@ -311,11 +332,17 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     isTransitInKantorPos = true
 
                     tvCurrentRecommendation.visibility = View.VISIBLE
-                    cvCurrentAngkotA.visibility = View.VISIBLE
-                    tvNextRecommendation.visibility = View.VISIBLE
-                    cvNextAngkotB.visibility = View.VISIBLE
-                    cvNextAngkotD.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.VISIBLE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.VISIBLE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.VISIBLE
+                    tvNextRecommendation.visibility = View.VISIBLE
                     tvNextRecommendationNotFound.visibility = View.GONE
                 }
             }
@@ -331,22 +358,33 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     isTransitInKantorPos = true
 
                     tvCurrentRecommendation.visibility = View.VISIBLE
+                    tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.GONE
                     cvCurrentAngkotB.visibility = View.VISIBLE
+                    cvCurrentAngkotC.visibility = View.GONE
                     cvCurrentAngkotD.visibility = View.VISIBLE
                     tvNextRecommendation.visibility = View.VISIBLE
                     cvNextAngkotA.visibility = View.VISIBLE
-                    tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
                     tvNextRecommendationNotFound.visibility = View.GONE
                 }
                 if (isDestinationTrayekB) {
                     tvCurrentRecommendation.visibility = View.VISIBLE
-                    cvCurrentAngkotB.visibility = View.VISIBLE
-                    cvCurrentAngkotD.visibility = View.VISIBLE
-                    tvNextRecommendation.visibility = View.VISIBLE
-                    cvNextAngkotB.visibility = View.VISIBLE
-                    cvNextAngkotD.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
-                    tvNextRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.GONE
+                    cvCurrentAngkotB.visibility = View.VISIBLE
+                    cvCurrentAngkotC.visibility = View.GONE
+                    cvCurrentAngkotD.visibility = View.VISIBLE
+                    tvNextRecommendation.visibility = View.GONE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
+                    tvNextRecommendationNotFound.visibility = View.VISIBLE
                 }
 
                 if (isDestinationTrayekC) {
@@ -357,23 +395,34 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     isTransitInRejasa = true
 
                     tvCurrentRecommendation.visibility = View.VISIBLE
+                    tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.GONE
                     cvCurrentAngkotB.visibility = View.VISIBLE
+                    cvCurrentAngkotC.visibility = View.GONE
                     cvCurrentAngkotD.visibility = View.VISIBLE
                     tvNextRecommendation.visibility = View.VISIBLE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.GONE
                     cvNextAngkotC.visibility = View.VISIBLE
-                    tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
                     tvNextRecommendationNotFound.visibility = View.GONE
                 }
 
                 if (isDestinationTrayekD) {
                     tvCurrentRecommendation.visibility = View.VISIBLE
-                    cvCurrentAngkotB.visibility = View.VISIBLE
-                    cvCurrentAngkotD.visibility = View.VISIBLE
-                    tvNextRecommendation.visibility = View.VISIBLE
-                    cvNextAngkotB.visibility = View.VISIBLE
-                    cvNextAngkotD.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
-                    tvNextRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.GONE
+                    cvCurrentAngkotB.visibility = View.VISIBLE
+                    cvCurrentAngkotC.visibility = View.GONE
+                    cvCurrentAngkotD.visibility = View.VISIBLE
+                    tvNextRecommendation.visibility = View.GONE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
+                    tvNextRecommendationNotFound.visibility = View.VISIBLE
                 }
             }
         }
@@ -386,10 +435,17 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     isTransitInPasarWage = true
 
                     tvCurrentRecommendation.visibility = View.VISIBLE
+                    tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.GONE
+                    cvCurrentAngkotB.visibility = View.GONE
                     cvCurrentAngkotC.visibility = View.VISIBLE
+                    cvCurrentAngkotD.visibility = View.GONE
                     tvNextRecommendation.visibility = View.VISIBLE
                     cvNextAngkotA.visibility = View.VISIBLE
-                    tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
                     tvNextRecommendationNotFound.visibility = View.GONE
                 }
                 if (isDestinationTrayekB) {
@@ -400,21 +456,34 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     isTransitInKantorPos = true
 
                     tvCurrentRecommendation.visibility = View.VISIBLE
-                    cvCurrentAngkotC.visibility = View.VISIBLE
-                    tvNextRecommendation.visibility = View.VISIBLE
-                    cvNextAngkotB.visibility = View.VISIBLE
-                    cvNextAngkotD.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.GONE
+                    cvCurrentAngkotB.visibility = View.GONE
+                    cvCurrentAngkotC.visibility = View.VISIBLE
+                    cvCurrentAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.VISIBLE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.VISIBLE
+                    tvNextRecommendation.visibility = View.VISIBLE
                     tvNextRecommendationNotFound.visibility = View.GONE
                 }
 
                 if (isDestinationTrayekC) {
                     tvCurrentRecommendation.visibility = View.VISIBLE
-                    cvCurrentAngkotC.visibility = View.VISIBLE
-                    tvNextRecommendation.visibility = View.VISIBLE
-                    cvNextAngkotC.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
-                    tvNextRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.GONE
+                    cvCurrentAngkotB.visibility = View.GONE
+                    cvCurrentAngkotC.visibility = View.VISIBLE
+                    cvCurrentAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.GONE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
+                    tvNextRecommendationNotFound.visibility = View.VISIBLE
                 }
 
                 if (isDestinationTrayekD) {
@@ -425,12 +494,17 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     isTransitInKantorPos = false
 
                     tvCurrentRecommendation.visibility = View.VISIBLE
-                    cvCurrentAngkotB.visibility = View.VISIBLE
-                    cvCurrentAngkotD.visibility = View.VISIBLE
-                    tvNextRecommendation.visibility = View.VISIBLE
-                    cvNextAngkotB.visibility = View.VISIBLE
-                    cvNextAngkotD.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.GONE
+                    cvCurrentAngkotB.visibility = View.GONE
+                    cvCurrentAngkotC.visibility = View.VISIBLE
+                    cvCurrentAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.VISIBLE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.VISIBLE
+                    tvNextRecommendation.visibility = View.VISIBLE
                     tvNextRecommendationNotFound.visibility = View.GONE
                 }
             }
@@ -446,22 +520,33 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     isTransitInKantorPos = false
 
                     tvCurrentRecommendation.visibility = View.VISIBLE
+                    tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.GONE
                     cvCurrentAngkotB.visibility = View.VISIBLE
+                    cvCurrentAngkotC.visibility = View.GONE
                     cvCurrentAngkotD.visibility = View.VISIBLE
                     tvNextRecommendation.visibility = View.VISIBLE
                     cvNextAngkotA.visibility = View.VISIBLE
-                    tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
                     tvNextRecommendationNotFound.visibility = View.GONE
                 }
                 if (isDestinationTrayekB) {
                     tvCurrentRecommendation.visibility = View.VISIBLE
-                    cvCurrentAngkotB.visibility = View.VISIBLE
-                    cvCurrentAngkotD.visibility = View.VISIBLE
-                    tvNextRecommendation.visibility = View.VISIBLE
-                    cvNextAngkotB.visibility = View.VISIBLE
-                    cvNextAngkotD.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
-                    tvNextRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.GONE
+                    cvCurrentAngkotB.visibility = View.VISIBLE
+                    cvCurrentAngkotC.visibility = View.GONE
+                    cvCurrentAngkotD.visibility = View.VISIBLE
+                    tvNextRecommendation.visibility = View.GONE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
+                    tvNextRecommendationNotFound.visibility = View.VISIBLE
                 }
 
                 if (isDestinationTrayekC) {
@@ -472,23 +557,33 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     isTransitInRejasa = true
 
                     tvCurrentRecommendation.visibility = View.VISIBLE
+                    tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.GONE
                     cvCurrentAngkotB.visibility = View.VISIBLE
+                    cvCurrentAngkotC.visibility = View.GONE
                     cvCurrentAngkotD.visibility = View.VISIBLE
                     tvNextRecommendation.visibility = View.VISIBLE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.GONE
                     cvNextAngkotC.visibility = View.VISIBLE
-                    tvCurrentRecommendationNotFound.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
                     tvNextRecommendationNotFound.visibility = View.GONE
                 }
 
                 if (isDestinationTrayekD) {
                     tvCurrentRecommendation.visibility = View.VISIBLE
-                    cvCurrentAngkotB.visibility = View.VISIBLE
-                    cvCurrentAngkotD.visibility = View.VISIBLE
-                    tvNextRecommendation.visibility = View.VISIBLE
-                    cvNextAngkotB.visibility = View.VISIBLE
-                    cvNextAngkotD.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
-                    tvNextRecommendationNotFound.visibility = View.GONE
+                    cvCurrentAngkotA.visibility = View.GONE
+                    cvCurrentAngkotB.visibility = View.VISIBLE
+                    cvCurrentAngkotC.visibility = View.GONE
+                    cvCurrentAngkotD.visibility = View.VISIBLE
+                    tvNextRecommendation.visibility = View.GONE
+                    cvNextAngkotA.visibility = View.GONE
+                    cvNextAngkotB.visibility = View.GONE
+                    cvNextAngkotC.visibility = View.GONE
+                    cvNextAngkotD.visibility = View.GONE
+                    tvNextRecommendation.visibility = View.VISIBLE
+                    tvNextRecommendationNotFound.visibility = View.VISIBLE
                 }
             }
         }
@@ -520,10 +615,6 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         val customerToKantorPos = customerLocation.distanceTo(kantorPosLocation)
         val customerToGayam = customerLocation.distanceTo(gayamLocation)
         val customerToRejasa = customerLocation.distanceTo(rejasaLocation)
-
-//        if (customerToPasarWage < 500 || customerToKantorPos < 500 || customerToGayam < 500 || customerToRejasa < 500) {
-//            getClosestDriverTransitLocation()
-//        }
 
         if (isTransitInPasarWage || isTransitInKantorPos || isTransitInGayam || isTransitInRejasa) {
             if (customerToPasarWage < 300) {

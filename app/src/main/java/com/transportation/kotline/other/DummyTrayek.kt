@@ -829,6 +829,7 @@ object DummyTrayek {
         val destinationToJlAlMunawwaroh = destinationCustomer.distanceTo(jlAlMunawwaroh) / 1000
         val destinationToJlGotongRoyong = destinationCustomer.distanceTo(jlGotongRoyong) / 1000
 
+        // check if the destination location is between two locations
         return destinationToJlVeteran in 0F.rangeTo(0.43942437F) && destinationToJlLetnanKarjono in 0F.rangeTo(
             0.43942437F
         ) || destinationToJlLetnanKarjono in 0F.rangeTo(0.1373421F) && destinationToJlStadion in 0F.rangeTo(

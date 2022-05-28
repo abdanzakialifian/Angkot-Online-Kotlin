@@ -34,7 +34,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.FirebaseMessaging
 import com.transportation.kotline.BuildConfig
 import com.transportation.kotline.R
 import com.transportation.kotline.databinding.ActivityDriverBinding
@@ -797,20 +796,6 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
         builder.setPositiveButton("Ya") { _, _ ->
             googleSignInClient.revokeAccess()
                 .addOnCompleteListener {
-//                    FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener {
-//                        if (it.isSuccessful) {
-//                            val driverId = FirebaseAuth.getInstance().currentUser?.uid
-//                            val driverDatabase =
-//                                firebaseDatabase.reference.child("Users").child("Drivers")
-//                                    .child(driverId.toString())
-//
-//                            val driverInformation = HashMap<String, Any>()
-//                            driverInformation["deviceToken"] = ""
-//                            driverDatabase.updateChildren(driverInformation)
-//
-//
-//                        }
-//                    }
                     disconnectDriver()
                     Intent(this, OptionActivity::class.java).apply {
                         startActivity(this)

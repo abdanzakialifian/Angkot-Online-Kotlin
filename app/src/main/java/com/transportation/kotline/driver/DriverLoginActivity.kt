@@ -129,22 +129,10 @@ class DriverLoginActivity : AppCompatActivity(), View.OnClickListener {
                     val map: Map<String?, Any?>? = snapshot.getValue(gti)
                     // check verification
                     if (map?.get("verification") == true) {
-//                        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-//                            if (task.isSuccessful) {
-//                                val token = task.result
-//                                FirebaseService.sharedPreferences =
-//                                    getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
-//                                FirebaseService.token = token
-//                                val driverInformation = HashMap<String, Any>()
-//                                driverInformation["deviceToken"] = task.result
-//                                driverDatabase.updateChildren(driverInformation)
-
                         Intent(this@DriverLoginActivity, DriverActivity::class.java).apply {
                             startActivity(this)
                             finishAffinity()
                         }
-//                            }
-//                        }
                     } else {
                         Toast.makeText(
                             this@DriverLoginActivity,
