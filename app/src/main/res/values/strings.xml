@@ -130,4 +130,5 @@
     <string name="empty_fares">Tarif kosong.</string>
     <string name="empty_description">Deskripsi kosong.</string>
     <string name="title_activity_detail_route_information">DetailRouteInformationActivity</string>
+    <string name="reject">Tolak</string>
 </resources>

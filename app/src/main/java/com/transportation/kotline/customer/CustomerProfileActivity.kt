@@ -199,21 +199,17 @@ class CustomerProfileActivity : AppCompatActivity(), View.OnClickListener {
                 uploadTask.addOnSuccessListener {
                     FirebaseStorage.getInstance().reference.child("profile_images")
                         .child(customerId.toString()).downloadUrl.addOnCompleteListener { task ->
-                            val newImage = HashMap<String, Any>()
-                            newImage["profileImageUrl"] = task.result.toString()
-                            mCustomerDatabase.updateChildren(newImage)
+                            if (task.isSuccessful) {
+                                val newImage = HashMap<String, Any>()
+                                newImage["profileImageUrl"] = task.result.toString()
+                                mCustomerDatabase.updateChildren(newImage)
+                            }
                         }
                 }
 
                 uploadTask.addOnFailureListener {
                     finish()
                 }
-            } else {
-                Toast.makeText(
-                    this@CustomerProfileActivity,
-                    resources.getString(R.string.saving_failed),
-                    Toast.LENGTH_SHORT
-                ).show()
             }
 
             val customerInformation = HashMap<String, Any>()

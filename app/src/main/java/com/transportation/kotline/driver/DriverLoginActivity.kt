@@ -17,6 +17,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.iid.FirebaseInstanceIdReceiver
+import com.google.firebase.iid.internal.FirebaseInstanceIdInternal
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.transportation.kotline.R
@@ -129,6 +131,17 @@ class DriverLoginActivity : AppCompatActivity(), View.OnClickListener {
                     val map: Map<String?, Any?>? = snapshot.getValue(gti)
                     // check verification
                     if (map?.get("verification") == true) {
+                        // update device token
+                        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                val token = HashMap<String, Any>()
+                                token["deviceToken"] = it.result
+
+                                firebaseDatabase.reference.child("Users")
+                                    .child("Drivers").child(driverId).updateChildren(token)
+                            }
+                        }
+
                         Intent(this@DriverLoginActivity, DriverActivity::class.java).apply {
                             startActivity(this)
                             finishAffinity()

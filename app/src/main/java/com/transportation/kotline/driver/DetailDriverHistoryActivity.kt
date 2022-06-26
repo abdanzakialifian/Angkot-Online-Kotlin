@@ -29,7 +29,7 @@ import java.util.*
 @Suppress("DEPRECATION")
 class DetailDriverHistoryActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener {
 
-    private lateinit var mMap: GoogleMap
+    private var mMap: GoogleMap? = null
     private lateinit var binding: ActivityDetailDriverHistoryBinding
     private lateinit var polyLines: ArrayList<Polyline>
     private lateinit var firebaseDatabase: FirebaseDatabase
@@ -181,12 +181,12 @@ class DetailDriverHistoryActivity : AppCompatActivity(), OnMapReadyCallback, Rou
             val width = resources.displayMetrics.widthPixels
             val padding = (width * 0.2).toInt()
             val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
-            mMap.animateCamera(cameraUpdate)
-            mMap.addMarker(
+            mMap?.animateCamera(cameraUpdate)
+            mMap?.addMarker(
                 MarkerOptions().position(LatLng(locationLat, locationLng)).title("Your location")
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_car))
             )
-            mMap.addMarker(
+            mMap?.addMarker(
                 MarkerOptions().position(LatLng(destinationLat, destinationLng))
                     .title("Destination location")
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_destination_pin))
@@ -211,13 +211,10 @@ class DetailDriverHistoryActivity : AppCompatActivity(), OnMapReadyCallback, Rou
                 polyOptions.color(ContextCompat.getColor(applicationContext, COLORS[colorIndex]))
                 polyOptions.width((10 + i * 3).toFloat())
                 polyOptions.addAll(route[i].points)
-                val polyline: Polyline = mMap.addPolyline(polyOptions)
-                polyLines.add(polyline)
-                Toast.makeText(
-                    applicationContext,
-                    "Route " + (i + 1) + ": distance - " + route[i].distanceValue + ": duration - " + route[i].durationValue,
-                    Toast.LENGTH_SHORT
-                ).show()
+                val polyline: Polyline? = mMap?.addPolyline(polyOptions)
+                if (polyline != null) {
+                    polyLines.add(polyline)
+                }
             }
         }
     }

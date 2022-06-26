@@ -40,7 +40,6 @@ import com.transportation.kotline.databinding.ActivityDriverBinding
 import com.transportation.kotline.databinding.NavHeaderBinding
 import com.transportation.kotline.other.ApplicationTurnedOff
 import com.transportation.kotline.other.OptionActivity
-import java.util.*
 
 
 @Suppress("DEPRECATION")
@@ -73,7 +72,6 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
     private var customerDestination: String? = null
     private var destinationAddress: String? = null
     private var pickUpLatLng: LatLng? = null
-    private var timer: Timer? = null
     private var customerId: String = ""
     private var trayek: String = ""
     private var isZoomUpdate = false
@@ -82,6 +80,7 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
     private var backPressedTime = 0L
     private var status = 0
     private var markerList: ArrayList<Marker> = arrayListOf()
+    private var isPickedOrder = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -197,7 +196,7 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
             val gti = object : GenericTypeIndicator<Map<String?, Any?>?>() {}
             val driverRef = firebaseDatabase.reference.child("Users").child("Drivers")
                 .child(driverId.toString())
-            driverRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            driverRef.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val map: Map<String?, Any?>? = snapshot.getValue(gti)
@@ -205,7 +204,7 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
                         if (map?.get("profileImageUrl") != null) {
                             val imageProfile = navHeaderBinding.imgProfileNavHeader
                             driverImage = map["profileImageUrl"].toString()
-                            Glide.with(this@DriverActivity)
+                            Glide.with(applicationContext)
                                 .load(driverImage)
                                 .placeholder(R.drawable.ic_load_data)
                                 .error(R.drawable.ic_error_load_data)
@@ -410,6 +409,12 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
                         imgProfileCustomer.visibility = View.VISIBLE
                         layoutName.visibility = View.VISIBLE
                         layoutPhone.visibility = View.VISIBLE
+                        if (!isPickedOrder) {
+                            btnReject.visibility = View.VISIBLE
+                            btnReject.setOnClickListener { endRide() }
+                        } else {
+                            btnReject.visibility = View.GONE
+                        }
                         tvNoOrders.visibility = View.GONE
 
                         if (map?.get("profileImageUrl") != null) {
@@ -614,6 +619,7 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
     // function to end ride
     private fun endRide() {
         status = 0
+        isPickedOrder = false
 
         binding.customBackgroundLayoutDriver.btnRideStatus.text =
             resources.getString(R.string.picked_customer)
@@ -658,6 +664,7 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
             layoutAddress.visibility = View.GONE
             btnRideStatus.visibility = View.GONE
             tvNoOrders.visibility = View.VISIBLE
+            btnReject.visibility = View.GONE
         }
     }
 
@@ -787,6 +794,7 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
     // function to get current time
     private fun getCurrentTimestamp(): Long = System.currentTimeMillis() / 1000
 
+    // function alert logout
     private fun alertLogout() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.logout)
@@ -894,7 +902,6 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
 
         polyLines = ArrayList()
         //add route(s) to the map.
-        //add route(s) to the map.
         if (route != null) {
             for (i in 0 until route.size) {
 
@@ -932,6 +939,9 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
                     val customerRequest = HashMap<String, Any>()
                     customerRequest["isPicked"] = true
                     driverRef.updateChildren(customerRequest)
+
+                    isPickedOrder = true
+                    binding.customBackgroundLayoutDriver.btnReject.visibility = View.GONE
 
                     binding.customBackgroundLayoutDriver.btnRideStatus.text =
                         resources.getString(R.string.drive_completed)
@@ -983,26 +993,14 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener,
         backPressedTime = System.currentTimeMillis()
     }
 
-//    override fun onPause() {
-//        super.onPause()
-//
-//        timer = Timer()
-//        val logoutTimeTaskAvailable = LogOutTimerTask(googleSignInClient, "DriversAvailable")
-//        timer!!.scheduleAtFixedRate(logoutTimeTaskAvailable, 60000L, 5000L)
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//
-//        if (timer != null) {
-//            timer!!.cancel()
-//            timer = null
-//        }
-//    }
+    override fun onDestroy() {
+        super.onDestroy()
+        disconnectDriver()
+    }
 
     companion object {
         private const val LOCATION_REQUEST_CODE = 1
         private val COLORS = intArrayOf(R.color.light_blue)
-        private const val RADIUS = 1.0
+        private const val RADIUS = 10000.0
     }
 }

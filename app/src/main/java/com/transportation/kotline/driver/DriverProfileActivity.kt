@@ -234,9 +234,11 @@ class DriverProfileActivity : AppCompatActivity(), View.OnClickListener {
                 uploadTask.addOnSuccessListener {
                     FirebaseStorage.getInstance().reference.child("profile_images")
                         .child(driverId.toString()).downloadUrl.addOnCompleteListener { task ->
-                            val newImage = HashMap<String, Any>()
-                            newImage["profileImageUrl"] = task.result.toString()
-                            mDriverDatabase.updateChildren(newImage)
+                            if (task.isSuccessful) {
+                                val newImage = HashMap<String, Any>()
+                                newImage["profileImageUrl"] = task.result.toString()
+                                mDriverDatabase.updateChildren(newImage)
+                            }
                         }
                 }
 

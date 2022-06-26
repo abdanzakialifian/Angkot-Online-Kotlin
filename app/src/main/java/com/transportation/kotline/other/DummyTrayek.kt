@@ -69,6 +69,7 @@ object DummyTrayek {
         val customerToJlStadion = customerLocation.distanceTo(jlStadion) / 1000
         val customerToTerminal = customerLocation.distanceTo(terminalBus) / 1000
 
+        // menghitung jarak antara jl veteran dan jl brengkok, ketemu hasil lalu cek apakah user berada pada jarak tersebut
         if (customerToJlVeteran in 0F.rangeTo(0.17980675F) && customerToJlBrengkok in 0F.rangeTo(
                 0.17980675F
             ) || customerToJlBrengkok in 0F.rangeTo(0.22749068F) && customerToJlCampurSalam in 0F.rangeTo(
@@ -182,10 +183,7 @@ object DummyTrayek {
         )
     }
 
-    fun getTrayekAngkotB(destination: LatLng?, mLastLocation: Location?): String? {
-        val destinationCustomer = Location("")
-        destinationCustomer.latitude = destination?.latitude ?: 0.0
-        destinationCustomer.longitude = destination?.longitude ?: 0.0
+    fun getTrayekAngkotB(mLastLocation: Location?): String? {
 
         val customerLocation = Location("")
         customerLocation.latitude = mLastLocation?.latitude ?: 0.0
@@ -416,10 +414,7 @@ object DummyTrayek {
         )
     }
 
-    fun getTrayekAngkotC(destination: LatLng?, mLastLocation: Location?): String? {
-        val destinationCustomer = Location("")
-        destinationCustomer.latitude = destination?.latitude ?: 0.0
-        destinationCustomer.longitude = destination?.longitude ?: 0.0
+    fun getTrayekAngkotC(mLastLocation: Location?): String? {
 
         val customerLocation = Location("")
         customerLocation.latitude = mLastLocation?.latitude ?: 0.0
@@ -633,10 +628,7 @@ object DummyTrayek {
         )
     }
 
-    fun getTrayekAngkotD(destination: LatLng?, mLastLocation: Location?): String? {
-        val destinationCustomer = Location("")
-        destinationCustomer.latitude = destination?.latitude ?: 0.0
-        destinationCustomer.longitude = destination?.longitude ?: 0.0
+    fun getTrayekAngkotD(mLastLocation: Location?): String? {
 
         val customerLocation = Location("")
         customerLocation.latitude = mLastLocation?.latitude ?: 0.0

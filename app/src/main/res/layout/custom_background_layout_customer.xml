@@ -446,6 +446,20 @@
             android:text="@string/search_angkot"
             android:textAllCaps="false" />
 
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_request_angkot"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/custom_button_blue"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/places_cancel"
+            android:visibility="gone"
+            android:textAllCaps="false" />
+
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

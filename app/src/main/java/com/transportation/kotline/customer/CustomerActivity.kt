@@ -107,6 +107,7 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
     private var radius = 0.0
     private var backPressedTime = 0L
     private var markerList: ArrayList<Marker> = arrayListOf()
+    private var isPicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -215,16 +216,16 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                 address = place.address
                 destinationLatLng = place.latLng
 
-                requestTrayekA = DummyTrayek.getTrayekAngkotA(place.latLng, mLastLocation)
+                requestTrayekA = DummyTrayek.getTrayekAngkotA(destinationLatLng, mLastLocation)
                 isDestinationTrayekA = DummyTrayek.getTrayekDestinationA(place.latLng)
 
-                requestTrayekB = DummyTrayek.getTrayekAngkotB(place.latLng, mLastLocation)
+                requestTrayekB = DummyTrayek.getTrayekAngkotB(mLastLocation)
                 isDestinationTrayekB = DummyTrayek.getTrayekDestinationB(place.latLng)
 
-                requestTrayekC = DummyTrayek.getTrayekAngkotC(place.latLng, mLastLocation)
+                requestTrayekC = DummyTrayek.getTrayekAngkotC(mLastLocation)
                 isDestinationTrayekC = DummyTrayek.getTrayekDestinationC(place.latLng)
 
-                requestTrayekD = DummyTrayek.getTrayekAngkotD(place.latLng, mLastLocation)
+                requestTrayekD = DummyTrayek.getTrayekAngkotD(mLastLocation)
                 isDestinationTrayekD = DummyTrayek.getTrayekDestinationD(place.latLng)
 
                 checkTrayekAgkot()
@@ -234,6 +235,7 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     layoutCurrentTrayek.visibility = View.VISIBLE
                     layoutTransit.visibility = View.VISIBLE
                     layoutNextTrayek.visibility = View.VISIBLE
+                    btnCancel.visibility = View.VISIBLE
                 }
 
                 // create bottom sheet
@@ -262,6 +264,42 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         startService(Intent(this, ApplicationTurnedOff::class.java))
 
         createNotificationChannel()
+
+        // add event click to button cancel
+        binding.customBackgroundLayoutCustomer.btnCancel.setOnClickListener {
+            endRide()
+        }
+    }
+
+    private val mLocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            for (location in locationResult.locations) {
+                // location periodically
+                mLastLocation = location
+
+                if (!isZoomUpdate) {
+                    val currentLatLng = LatLng(location.latitude, location.longitude)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLatLng))
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 16F))
+                    isZoomUpdate = true
+                }
+
+                // call function customers position
+                customersPosition()
+
+                if (isPicked) {
+                    if (!isCurrentPosition) {
+                        customerCurrentPosition()
+                    }
+                }
+
+                // call function to get driver arround
+                if (!isGetDriversAroundStarted) {
+                    getDriversAround()
+
+                }
+            }
+        }
     }
 
     private fun checkTrayekAgkot() {
@@ -271,9 +309,9 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     tvCurrentRecommendation.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
                     cvCurrentAngkotA.visibility = View.VISIBLE
-                    cvNextAngkotB.visibility = View.GONE
-                    cvNextAngkotC.visibility = View.GONE
-                    cvNextAngkotD.visibility = View.GONE
+                    cvCurrentAngkotB.visibility = View.GONE
+                    cvCurrentAngkotC.visibility = View.GONE
+                    cvCurrentAngkotD.visibility = View.GONE
                     tvNextRecommendation.visibility = View.GONE
                     cvNextAngkotA.visibility = View.GONE
                     cvNextAngkotB.visibility = View.GONE
@@ -293,9 +331,9 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     tvCurrentRecommendation.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
                     cvCurrentAngkotA.visibility = View.VISIBLE
-                    cvNextAngkotB.visibility = View.GONE
-                    cvNextAngkotC.visibility = View.GONE
-                    cvNextAngkotD.visibility = View.GONE
+                    cvCurrentAngkotB.visibility = View.GONE
+                    cvCurrentAngkotC.visibility = View.GONE
+                    cvCurrentAngkotD.visibility = View.GONE
                     tvNextRecommendation.visibility = View.VISIBLE
                     cvNextAngkotA.visibility = View.GONE
                     cvNextAngkotB.visibility = View.VISIBLE
@@ -312,9 +350,9 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     tvCurrentRecommendation.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
                     cvCurrentAngkotA.visibility = View.VISIBLE
-                    cvNextAngkotB.visibility = View.GONE
-                    cvNextAngkotC.visibility = View.GONE
-                    cvNextAngkotD.visibility = View.GONE
+                    cvCurrentAngkotB.visibility = View.GONE
+                    cvCurrentAngkotC.visibility = View.GONE
+                    cvCurrentAngkotD.visibility = View.GONE
                     tvNextRecommendation.visibility = View.VISIBLE
                     cvNextAngkotA.visibility = View.GONE
                     cvNextAngkotB.visibility = View.GONE
@@ -334,9 +372,9 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     tvCurrentRecommendation.visibility = View.VISIBLE
                     tvCurrentRecommendationNotFound.visibility = View.GONE
                     cvCurrentAngkotA.visibility = View.VISIBLE
-                    cvNextAngkotB.visibility = View.GONE
-                    cvNextAngkotC.visibility = View.GONE
-                    cvNextAngkotD.visibility = View.GONE
+                    cvCurrentAngkotB.visibility = View.GONE
+                    cvCurrentAngkotC.visibility = View.GONE
+                    cvCurrentAngkotD.visibility = View.GONE
                     tvNextRecommendation.visibility = View.VISIBLE
                     cvNextAngkotA.visibility = View.GONE
                     cvNextAngkotB.visibility = View.VISIBLE
@@ -655,7 +693,7 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
             val gti = object : GenericTypeIndicator<Map<String?, Any?>?>() {}
             val customerRef = firebaseDatabase.reference.child("Users").child("Customers")
                 .child(customerId.toString())
-            customerRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            customerRef.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val map: Map<String?, Any?>? = snapshot.getValue(gti)
@@ -663,7 +701,7 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                         if (map?.get("profileImageUrl") != null) {
 
                             val image = map["profileImageUrl"].toString()
-                            Glide.with(this@CustomerActivity)
+                            Glide.with(applicationContext)
                                 .load(image)
                                 .placeholder(R.drawable.ic_load_data)
                                 .error(R.drawable.ic_error_load_data)
@@ -695,39 +733,6 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
 
                 override fun onCancelled(error: DatabaseError) {}
             })
-        }
-    }
-
-    private val mLocationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            for (location in locationResult.locations) {
-                // location periodically
-                mLastLocation = location
-
-                if (!isZoomUpdate) {
-                    val currentLatLng = LatLng(location.latitude, location.longitude)
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLatLng))
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 16F))
-                    mMap.addMarker(
-                        MarkerOptions().position(currentLatLng)
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_pin))
-                    )
-                    isZoomUpdate = true
-                }
-
-                // call function customers position
-                customersPosition()
-
-                if (!isCurrentPosition) {
-                    customerCurrentPosition()
-                }
-
-                // call function to get driver arround
-                if (!isGetDriversAroundStarted) {
-                    getDriversAround()
-
-                }
-            }
         }
     }
 
@@ -942,6 +947,7 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         }
     }
 
+    // get driver transit
     private fun getClosestDriverTransitLocation() {
         val driverLocation = firebaseDatabase.reference.child("DriversAvailable")
         driverLocation.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -962,7 +968,7 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                             override fun onKeyEntered(key: String?, location: GeoLocation?) {
                                 if (!isDriverFoundTransit && key != null) {
 
-                                    if (isDriverFoundTransit) {
+                                    if (isDriverFoundTransit && key != driverFoundId) {
                                         return
                                     }
 
@@ -974,20 +980,22 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                                         ValueEventListener {
                                         override fun onDataChange(snapshot: DataSnapshot) {
                                             if (snapshot.exists()) {
-                                                val deviceToken =
-                                                    snapshot.child("deviceToken").value.toString()
+                                                if (driverFoundId != null) {
+                                                    val deviceToken =
+                                                        snapshot.child("deviceToken").value.toString()
 
-                                                isDriverFoundTransit = true
+                                                    isDriverFoundTransit = true
 
-                                                val title = "Pemberitahuan"
-                                                val message =
-                                                    "Siap-siap akan ada calon penumpang didekatmu."
+                                                    val title = "Pemberitahuan"
+                                                    val message =
+                                                        "Siap-siap akan ada calon penumpang didekatmu."
 
-                                                PushNotification(
-                                                    Notification(title, message),
-                                                    deviceToken
-                                                ).also { pushNotification ->
-                                                    sendNotificationToDriver(pushNotification)
+                                                    PushNotification(
+                                                        Notification(title, message),
+                                                        deviceToken
+                                                    ).also { pushNotification ->
+                                                        sendNotificationToDriver(pushNotification)
+                                                    }
                                                 }
                                             }
                                         }
@@ -1017,6 +1025,8 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
             override fun onCancelled(error: DatabaseError) {}
         })
     }
+
+//    private fun get
 
     private fun sendNotificationToDriver(notification: PushNotification) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -1126,6 +1136,7 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                                                     snapshot.getValue(gti)
 
                                                 if (mapReq?.get("isPicked") == true) {
+                                                    isPicked = true
                                                     binding.customBackgroundLayoutCustomer.apply {
                                                         tvCurrentRecommendation.visibility =
                                                             View.GONE
@@ -1331,6 +1342,8 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         isTransitInRejasa = false
         isTransitInKantorPos = false
 
+        isPicked = false
+
         isRequestAngkot = false
 
         isCurrentPosition = false
@@ -1384,6 +1397,7 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
             layoutTransit.visibility = View.GONE
             tvNextRecommendation.visibility = View.GONE
             layoutNextTrayek.visibility = View.GONE
+            btnCancel.visibility = View.GONE
             tvNoOrders.visibility = View.VISIBLE
         }
     }
@@ -1421,19 +1435,9 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         builder.setMessage(R.string.are_you_sure)
 
         builder.setPositiveButton("Ya") { _, _ ->
-            val customerId = firebaseAuth.currentUser?.uid
             googleSignInClient.revokeAccess()
                 .addOnCompleteListener {
-                    val customersPosition =
-                        firebaseDatabase.getReference("CustomersPosition")
-                    val geoFirePosition = GeoFire(customersPosition)
-                    geoFirePosition.removeLocation(customerId)
-
-                    val customersDb = firebaseDatabase.reference.child("Users").child("Customers")
-                        .child(customerId.toString())
-                    val checkLogin = HashMap<String, Any>()
-                    checkLogin["login"] = false
-                    customersDb.updateChildren(checkLogin)
+                    disconectCustomerPosition()
 
                     isCurrentPosition = false
 
@@ -1450,6 +1454,20 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         val alertDialog = builder.create()
         alertDialog.setCancelable(false)
         alertDialog.show()
+    }
+
+    private fun disconectCustomerPosition() {
+        val customerId = firebaseAuth.currentUser?.uid
+        val customersPosition =
+            firebaseDatabase.getReference("CustomersPosition")
+        val geoFirePosition = GeoFire(customersPosition)
+        geoFirePosition.removeLocation(customerId)
+
+        val customersDb = firebaseDatabase.reference.child("Users").child("Customers")
+            .child(customerId.toString())
+        val checkLogin = HashMap<String, Any>()
+        checkLogin["login"] = false
+        customersDb.updateChildren(checkLogin)
     }
 
     // showing map
@@ -1503,6 +1521,8 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
                     binding.customBackgroundLayoutCustomer.btnRequestAngkot.text =
                         resources.getString(R.string.getting_your_angkot)
 
+                    binding.customBackgroundLayoutCustomer.btnCancel.visibility = View.GONE
+
                     // call function to get closest driver
                     getClosestDriver()
                 }
@@ -1551,28 +1571,10 @@ class CustomerActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
         backPressedTime = System.currentTimeMillis()
     }
 
-//    override fun onPause() {
-//        super.onPause()
-//
-//        timer = Timer()
-//        val logoutTimeTask = LogOutTimerTask(googleSignInClient, "CustomersPosition")
-//        timer!!.scheduleAtFixedRate(logoutTimeTask, 60000L, 5000L)
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//
-//        if (timer != null) {
-//            timer!!.cancel()
-//            timer = null
-//            val userId = FirebaseAuth.getInstance().currentUser?.uid
-//            val customersDb = Firebase.database.reference.child("Users").child("Customers")
-//                .child(userId.toString())
-//            val checkLogin = HashMap<String, Any>()
-//            checkLogin["login"] = true
-//            customersDb.updateChildren(checkLogin)
-//        }
-//    }
+    override fun onDestroy() {
+        super.onDestroy()
+        disconectCustomerPosition()
+    }
 
     companion object {
         private const val LOCATION_REQUEST_CODE = 1
